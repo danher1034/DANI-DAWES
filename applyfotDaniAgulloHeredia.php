@@ -20,7 +20,7 @@
 $names = ["Usuario", "Nombre", "Apellido", "DNI", "Direccion", "Mail", "Teléfono", "Fecha de nacimiento", "Curriculum", "Foto"];
 $auxiliary = 0;
 
-$userExpression = '/[A-z0-9 ]{3,20}/';
+$userExpression = '/[A-z0-9 ]{3,20}/'; 
 $nameExpression = '/^[A-z ]{3,20}$/';
 $surnameExpression = '/^[A-z ]{3,20}$/';
 $dniExpression = '/^[0-9]{8}[A-Z]$/';
