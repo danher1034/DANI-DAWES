@@ -15,7 +15,7 @@
 </head>
 <body>
     <?php
-    $dir = __DIR__.'/images';
+    $dir = __DIR__.'/images/';
 
        if (is_dir($dir)) {
             if ($img_dir = opendir($dir)) {
@@ -25,15 +25,11 @@
                 closedir($img_dir);
             }
         }
+       
 
-
-        foreach($img as $image){
-        
-            echo '<img src="watermark.php?img=$_GET['.$image.']" alt="image">';
-
+        foreach ($img as $image) {
+            echo '<img src="watermark.php?img='.$dir. $image . '"></img>';
         }
-    
-
     ?>
     
 </body>
