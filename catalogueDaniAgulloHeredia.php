@@ -3,8 +3,6 @@
  * @author Dani Agullo Heredia
  * @version 1.0
  */
-
-
 ?>
 <!DOCTYPE html>
 <html lang="es">

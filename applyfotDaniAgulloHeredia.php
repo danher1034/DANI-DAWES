@@ -139,34 +139,34 @@ if (isset($_FILES['curriculum'])) { //comprueba si el campo existe
 }
 
 if (isset($_FILES['photo'])) { //comprueba si el campo existe
-    if ($_FILES['photo']['error'] != UPLOAD_ERR_OK) {
+    if ($_FILES['photo']['error'] != UPLOAD_ERR_OK) { //comprueba que alguna foto se haya introducido
         $errors['photo'] = 'No se ha introducido ninguna foto';
         unlink($CVnewroute);
-        switch ($_FILES['photo']['error']) {
+        switch ($_FILES['photo']['error']) { 
             case UPLOAD_ERR_INI_SIZE:
-            case UPLOAD_ERR_FORM_SIZE:
-                $errors['photo'] =  'La foto es demasiado grande.'; break;
+            case UPLOAD_ERR_FORM_SIZE: //comprueba que el tamaño sea correcto
+                $errors['photo'] =  'La foto es demasiado grande.'; break; 
                 unlink($CVnewroute);
-            case UPLOAD_ERR_PARTIAL:
-                $errors['photo'] = 'La foto nos se ha podido subir entero.'; break;
+            case UPLOAD_ERR_PARTIAL: //comprueba que la foto se haya subido entera
+                $errors['photo'] = 'La foto no se ha podido subir entero.'; break; 
                 unlink($CVnewroute);
-            case UPLOAD_ERR_NO_FILE:
-                $errors['photo'] =  'No se ha podido subir la foto.'; break;
+            case UPLOAD_ERR_NO_FILE: // comprueba que la foto se haya subido
+                $errors['photo'] =  'No se ha podido subir la foto.'; break; 
                 unlink($CVnewroute);
             default:
                 $errors['photo'] =  'Error indeterminado.';
                 unlink($CVnewroute);
         }
-    } else if ($_FILES['photo']['type'] != 'image/png') {
-        $errors['photo'] = 'Tiene que ser un archivo png';
+    } else if ($_FILES['photo']['type'] != 'image/png') { // comprueba el tipo de la imagen sea correcto
+        $errors['photo'] = 'Tiene que ser un archivo png'; 
         unlink($CVnewroute);
     } else if (is_uploaded_file($_FILES['photo']['tmp_name']) == true) {
-        $Photonewroute = __DIR__ . '/candidates/' . $_POST['dni']. '.png';
-        if (is_file($Photonewroute) == true) {
+        $Photonewroute = __DIR__ . '/candidates/' . $_POST['dni']. '.png'; // creo la nueva ruta que tendra la imagen con su nombre
+        if (is_file($Photonewroute) == true) { // comprueba que no exista uno con el mismo nombre
             $errors['photo'] = 'Ya existe una foto con tu dni';
             unlink($CVnewroute);
         }
-        if (!move_uploaded_file($_FILES['photo']['tmp_name'], $Photonewroute)) {
+        if (!move_uploaded_file($_FILES['photo']['tmp_name'], $Photonewroute)) { // comprueba si se ha podido mover el archivo
             $errors['photo'] = 'No se ha podido mover la foto correctamente';
             unlink($CVnewroute);
         }
@@ -175,10 +175,12 @@ if (isset($_FILES['photo'])) { //comprueba si el campo existe
         unlink($CVnewroute);
     }
 
-    $img = imagecreatefrompng($_FILES['photo']);
-    $img = imagescale($img,imagesx($img)*0.25);
-    imagepng($img,__DIR__.'/candidates/'. $_POST['dni'].'-thumbnall.png');
-    imagedestroy($img);
+    if (isset($_FILES['photo'])) {
+        $img = imagecreatefrompng($Photonewroute);
+        $img = imagescale($img,imagesx($img)*0.25);
+        imagepng($img,__DIR__.'/candidates/'. $_POST['dni'].'-thumbnall.png');
+        imagedestroy($img);
+        }
 }
 
 
@@ -204,7 +206,7 @@ if (isset($_FILES['photo'])) { //comprueba si el campo existe
                 exit;
             }
         }
-        echo 'Usuario: <input type="text" name="user"><br>';
+        echo 'Usuario: <input type="text" name="user"><br>';  // los siguiente if se encargan de crear los input para cada apartado
         if (isset($errors['user'])) {
             echo '<br>' . $errors['user'] . '<br>';
         }
