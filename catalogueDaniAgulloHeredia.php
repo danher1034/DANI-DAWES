@@ -15,12 +15,14 @@
 </head>
 <body>
     <?php
-    $dir = __DIR__.'/images/';
+        $dir =__DIR__.'/images/';
 
        if (is_dir($dir)) {
             if ($img_dir = opendir($dir)) {
                 while (($file = readdir($img_dir)) !== false) {
+                    if(strlen($file)>2){
                     $img[]=$file;
+                }
                 }
                 closedir($img_dir);
             }
@@ -28,7 +30,7 @@
        
 
         foreach ($img as $image) {
-            echo '<img src="watermark.php?img='.$dir. $image . '"></img>';
+            echo '<img src="watermark.php?img='.$image . '"></img>';
         }
     ?>
     
