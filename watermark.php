@@ -10,5 +10,5 @@
     imagestring($img, 75, 25, 75, 'Dani', $blackColor);
     imagepng($img);
     imagedestroy($img);
-
+ 
 
