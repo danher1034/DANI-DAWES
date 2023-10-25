@@ -31,11 +31,23 @@ require_once(__DIR__.'/includes/regularExpression.php');
                         exit;
                     }
                 }
-                echo '<br> Mail o Usuario: <input type="text" name="mail|user"><br>'; // Los siguiente if se encargan de crear los input para cada apartado
+                echo '<br> Mail o Usuario: <input type="text" 
+                                                  name="mail|user"
+                                                  required
+                                                  minlength="5"
+                                                  maxlength="20"
+                                                  pattern="^([a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+.[a-zA-Z]{2,4}$)|[A-z]{3,20}" >
+                                                <br>'; // Los siguiente if se encargan de crear los input para cada apartado
                 if (isset($errors['mail|user'])) {
                     echo '<br>' . $errors['mail|user'] . '<br>';
                 }
-                echo '<br> Contraseña : <input type="text" name="password"><br>';
+                echo '<br> Contraseña : <input type="password" 
+                                               name="password"
+                                               required
+                                               minlength="5"
+                                               maxlength="20"
+                                               pattern="^((?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=\S+$)(?=.*[;:\.,!¡\?¿@#\$%\^&\-_+=\(\)\[\]\{\}])).{8,20}$" >
+                                            <br>';
                 if (isset($errors['password'])) {
                     echo '<br>' . $errors['password'] . '<br>';
                 }

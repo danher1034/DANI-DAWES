@@ -10,6 +10,7 @@ body {
 .body-index {
   display: grid;
   gap: 10px;
+  margin-top: 1%;
   grid-template:
     "Sign-up" auto
     "Sign-in" 100px
@@ -37,6 +38,7 @@ body {
 .body-login{ 
   display: grid;
   gap: 10px;
+  margin-top: 1%;
   grid-template:
     "Sign-in" auto
     "Sign-up" 100px
