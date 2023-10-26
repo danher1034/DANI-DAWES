@@ -21,7 +21,21 @@
         </div>
     </nav>
     <aside class="sidebar">SIDEBAR</aside>
-    <article class="main">MAIN</article>
+    <article class="main">
+    <?php
+        echo '<form action="#" method="post" enctype="multipart/form-data">';           
+            if (isset($_POST['user'])) {
+                if (count($errors) < 1) {
+                    header('Location: /index.php');
+                    exit;
+                }
+                }
+                    echo '<br> Mail o Teléfono: <input type="text" name="mail|phone"><br>'; // Los siguiente if se encargan de crear los input para cada apartado
+                    if (isset($errors['mail|phone'])) {
+                        echo '<p class="error_login">'. $errors['mail|phone'] . '</p><br>';
+                    }
+    ?>
+    </article>
     <footer class="footer">FOOTER</footer>
 </body>
 </html>

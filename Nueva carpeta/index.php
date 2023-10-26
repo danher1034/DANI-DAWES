@@ -34,19 +34,19 @@ require_once(__DIR__.'/includes/regularExpression.php');
                         }
                         echo '<br> Mail o Teléfono: <input type="text" name="mail|phone"><br>'; // Los siguiente if se encargan de crear los input para cada apartado
                         if (isset($errors['mail|phone'])) {
-                            echo '<br>' . $errors['mail|phone'] . '<br>';
+                            echo '<p class="error_login">'. $errors['mail|phone'] . '</p><br>';
                         }
                         echo '<br> Nombre: <input type="text" name="name"><br>';
                         if (isset($errors['name'])) {
-                            echo '<br>' . $errors['name'] . '<br>';
+                            echo '<p class="error_login">'. $errors['name'] . '</p><br>';
                         }
                         echo '<br>Usuario: <input type="text" name="user"><br>';  
                         if (isset($errors['user'])) {
-                            echo '<br>' . $errors['user'] . '<br>';
+                            echo '<p class="error_login">'. $errors['user'] . '</p><br>';
                         }
                         echo '<br> Contraseña : <input type="text" name="password"><br>';
                         if (isset($errors['password'])) {
-                            echo '<br>' . $errors['password'] . '<br>';
+                            echo '<p class="error_login">'. $errors['password'] . '</p><br>';
                         }
                         echo '<br>';
                         echo '<br>';

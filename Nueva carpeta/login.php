@@ -6,9 +6,6 @@
 require_once(__DIR__.'/includes/User.inc.php');
 require_once(__DIR__.'/includes/regularExpression.php');
 
-
-
-
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -25,31 +22,19 @@ require_once(__DIR__.'/includes/regularExpression.php');
         <h4>Inicia sesión para ver revels de tus amigos.</h4>
         <form action="#" method="post" enctype="multipart/form-data">
             <?php
-                if (isset($_POST['mail|user'])) {
-                    if (count($errors) < 1) {
-                        header('Location: /index.php');
-                        exit;
-                    }
-                }
                 echo '<br> Mail o Usuario: <input type="text" 
                                                   name="mail|user"
-                                                  required
-                                                  minlength="5"
-                                                  maxlength="20"
-                                                  pattern="^([a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+.[a-zA-Z]{2,4}$)|[A-z]{3,20}" >
+                                                  required" >
                                                 <br>'; // Los siguiente if se encargan de crear los input para cada apartado
                 if (isset($errors['mail|user'])) {
-                    echo '<br>' . $errors['mail|user'] . '<br>';
+                    echo '<p class="error_login">'.$errors['mail|user'].'</p><br>';
                 }
                 echo '<br> Contraseña : <input type="password" 
                                                name="password"
-                                               required
-                                               minlength="5"
-                                               maxlength="20"
-                                               pattern="^((?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=\S+$)(?=.*[;:\.,!¡\?¿@#\$%\^&\-_+=\(\)\[\]\{\}])).{8,20}$" >
+                                               required" >
                                             <br>';
                 if (isset($errors['password'])) {
-                    echo '<br>' . $errors['password'] . '<br>';
+                    echo '<p class="error_login">'.$errors['password'].'</p><br>';
                 }
                 echo '<br>';
                 echo '<br>';
