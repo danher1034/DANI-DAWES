@@ -74,6 +74,9 @@ body {
   grid-area: navbar;
   background-color: #74808b;
   color:#e1dbdd;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .sidebar {
@@ -91,14 +94,79 @@ body {
   background-color: #8c96a0;
 }
 
+.error_login{
+  color: red;
+  font-size: 75%;
+}
 
+.sidebar2 {
+  grid-area: sidebar2;
+  background-color: #f19494;
+}
 
+.body-user {
+  display: grid;
+  gap: 10px;
+  grid-template:
+      "navbar  navbar" 100px
+      "sidebar main"   auto
+      "footer  footer" 50px /200px    auto;
 
+      grid-template-columns: 25% 75%;
+}
 
+.body-user > * {
+  box-shadow: -1px 1px 7px 0px rgba(0, 0, 0, 0.75);
+  padding: 10px;
+}
 
+.revels {
+  grid-area: revels;
+}
+.follower {
+  grid-area: follower;
+}
+.follows {
+  grid-area: follows;
+}
 
+.followers {
+  display: grid;
+  gap: 10px;
+  grid-template:
+      "revels follower follows" 50px;
+}
 
+.nav_form{
+  position: relative;
+}
 
+.nav_form>input{
+  width: 350px;
+  padding: 10px;
+  padding-right: 35px;
+  border-radius: 5px;
+  border: 0;
+  font-size: 1rem;
+}
+
+.nav_form>button{
+  background-color: crimson;
+  padding: 10px 15px;
+  position: absolute;
+  border: 0;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  margin: auto;
+  border-radius: 0 5px 5px 0;
+  color: #fff;
+  cursor: pointer;
+}
+
+.nav_form>button:hover{
+  background-color: darkred;
+}
 
 
   /* .color1 {color: #74808b;}
