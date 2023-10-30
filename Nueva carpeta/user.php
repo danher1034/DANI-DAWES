@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="css/styles.css">
+    <link href="https://fonts.cdnfonts.com/css/healing-lighters" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 <body class="body-user">
@@ -12,7 +13,7 @@
             <a class="navbar-brand" href="index.php">
                 <img src="img/logo-revels.png" alt="Logo" width="55" height="50">
             </a>
-            <h1>REVELS</h1>
+            <h1>Revels</h1>
             <form class="nav_form">
                 <input type="text" placeholder="Buscar...">
                 <button><i class="fa-solid fa-magnifying-glass"></i></button>

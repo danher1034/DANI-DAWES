@@ -17,12 +17,16 @@ require_once(__DIR__.'/includes/regularExpression.php');
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="css/styles.css">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link href="https://fonts.cdnfonts.com/css/healing-lighters" rel="stylesheet">
 </head>
 
 <body class="body-index">
     <div class="Sign-up" >
-        <h2>REVELS</h2><br>
+        <div class="tittle">
+            <img src="img/logo-revels.png" alt="Logo" width="80" height="80">
+            <h1>Revels</h1>
+        </div>
+        <br>
         <h4>Regístrate para ver revels de tus amigos</h4>
         <?php
                 echo '<form action="#" method="post" enctype="multipart/form-data">';           

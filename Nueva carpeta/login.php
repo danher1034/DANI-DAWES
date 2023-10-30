@@ -14,11 +14,16 @@ require_once(__DIR__.'/includes/regularExpression.php');
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/styles.css">
+    <link href="https://fonts.cdnfonts.com/css/healing-lighters" rel="stylesheet">
     <title>Login</title>
 </head>
 <body class="body-login">
     <div class="Sign-in" >
-        <h2>REVELS</h2><br>
+        <div class="tittle">
+            <img src="img/logo-revels.png" alt="Logo" width="80" height="80">
+            <h1>Revels</h1>
+        </div>
+        <br>
         <h4>Inicia sesión para ver revels de tus amigos.</h4>
         <form action="#" method="post" enctype="multipart/form-data">
             <?php

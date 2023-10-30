@@ -1,10 +1,30 @@
 html {
   height: 100%;
+  margin-left: 10%;
+  margin-right: 10%;
 }
 
 body {
   font-size: 1.2rem;
   min-height: 100%;
+}
+
+.tittle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #1b2634;
+}
+
+h1 {
+  font-family: 'Healing Lighters', sans-serif;
+  font-size: 50px;
+  vertical-align: middle;
+  color: #fff;
+}
+
+img {
+  vertical-align: middle;
 }
 
 .body-index {
@@ -72,7 +92,7 @@ body {
 
 .navbar {
   grid-area: navbar;
-  background-color: #74808b;
+  background-color: #1b2634;
   color:#e1dbdd;
   display: flex;
   justify-content: space-between;
@@ -151,7 +171,7 @@ body {
 }
 
 .nav_form>button{
-  background-color: crimson;
+  background-color:#9fddff;
   padding: 10px 15px;
   position: absolute;
   border: 0;
@@ -165,15 +185,23 @@ body {
 }
 
 .nav_form>button:hover{
-  background-color: darkred;
+  background-color: #7099c1;
 }
 
 
-  /* .color1 {color: #74808b;}
+  /* 
+  .color1 {color: #74808b;}
   .color2 {color: #838d99;}
   .color3 {color: #a1abaf;}
   .color4 {color: #c4c8c8;}
-  .color5 {color: #e1dbdd;} */
+  .color5 {color: #e1dbdd;}
+  
+  .color1 {color: #000000;}
+  .color2 {color: #1b2634;}
+  .color3 {color: #435b76;}
+  .color4 {color: #7099c1;}
+  .color5 {color: #9fddff;}
+  */
 
 
 
