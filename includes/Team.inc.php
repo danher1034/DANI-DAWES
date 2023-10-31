@@ -4,7 +4,7 @@
  * @version 1.0
  */
 
-class Team{
+ class Team{
     private $name;
     private $country;
     private $rider;
@@ -44,6 +44,8 @@ class Team{
         foreach($this->mechanic as $value){
             $Themechanic = '<p>'.$value.'</p>';
         }
+
+        return $this->name.$this->country.$Therider.$Themechanic;
             
     }
 }

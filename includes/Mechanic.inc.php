@@ -4,7 +4,7 @@
  * @version 1.0
  */
 
-class Mechanic extends Person{
+ class Mechanic extends Person{
     private $speciality;
 
 
@@ -16,8 +16,7 @@ class Mechanic extends Person{
 
     public function __toString()
     {
-        return parent::__toString().' '.
-            $this->speciality;
+        return parent::__toString().' '.$this->speciality;
     }
 
 }

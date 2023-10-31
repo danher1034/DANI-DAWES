@@ -1,11 +1,24 @@
 <?php
-
 /**
  * @author Dani Agullo Heredia
  * @version 1.0
  */
+    require_once(__DIR__.'/includes/utils.inc.php');
+    require_once(__DIR__.'/includes/Person.inc.php');
+    require_once(__DIR__.'/includes/Mechanic.inc.php');
+    require_once(__DIR__.'/includes/Rider.inc.php');
+    
 
- require_once(__DIR__.'/include/bdconect.inc.php');
+    foreach($teams as $team){
+        for ($i = 1; $i < 2; $i++) {
+            $Mechanic = new Mechanic(randomName(),randomBirthday(),randomSpeciality());
+            $team = $Mechanic;
+            $Rider = new Rider(randomName(),randomBirthday(),randomDorsal($dorsals));
+            $team=$Rider;
+        }
+    }
+
+
 ?>
 
 <!DOCTYPE html>
@@ -17,20 +30,7 @@
 </head>
 <body>
     <?php
-        $bd='discografia';
-        $user='vetustamorla';
-        $pass='15151';
-        $options=array(PDO::MYSQL_ATTR_INIT_COMMAND =>'SET NAMES utf8');
-        $conection=bdconection($bd,$user,$pass,$options);
-
-        $result = $conection->query('SELECT nombre FROM grupos;');
-
-        foreach($result->fetchAll() as $names){
-            echo 'Nombre: '.$names['nombre'];
-            echo '<br>';
-        }
-
+        print_r($team);
     ?>
-   
 </body>
 </html>

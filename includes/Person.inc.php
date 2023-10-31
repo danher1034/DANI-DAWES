@@ -4,7 +4,7 @@
  * @version 1.0
  */
 
-class Person{
+ class Person{
     private $name;
     private $birthday;
 
