@@ -16,8 +16,10 @@
 
     public function __toString()
     {
-        return parent::__toString().' '.
-            $this->number;
+        return '<h4>Piloto</h4> '.
+            parent::__toString().
+            '<p>Dorsal: '.$this->number.'</p>';;
+            
     }
 
 }

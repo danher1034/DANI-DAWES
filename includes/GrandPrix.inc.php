@@ -6,13 +6,14 @@
 
 class GrandPrix{
     private $date;
-    private $riders;
+    private $rider;
     private Circuit $circuit;
 
 
 
-    public function __construct(int $date) //contructor del usuario
+    public function __construct(int $date,Circuit $circuit) //contructor del usuario
     {
+     $this->circuit=$circuit;
      $this->date =$date;
     }
 
@@ -29,24 +30,34 @@ class GrandPrix{
     }
   
     public function __toString(){ // metodo toString
-        foreach($this->circuit as $value){
-            $circuitInfo = '<p>'.$value.'</p>';
-         }
-        return $circuitInfo.$this->date;
+        return '<h2>Fecha: '.$this->date.'</h2>
+                <p>Circuito: '.$this->circuit.'</p>';
+
     }
 
-    function addRider(Rider $rider,int $position){    
-        $riders=[
-            'Position'=> $position,
-            'Rider'=> $rider
-        ];
+
+    
+
+    function addRider(Rider $rider,int $position){ 
+        
+        $this->rider[]=$rider;
+
+        if(isset($this->rider[$position])){
+            return false;
+        }else{
+            $this->rider[$position]=$rider;
+            return true;
+        }
     }
 
     function result($circuit, $date, $riders ){
         usort($riders, function($a, $b) {
             return $a['Position'] - $b['Position'];
         });
-        return $this->circuit.$this->date.print_r($this->riders);
+        return '<div>
+                    <h2>Fecha: '.$this->date.'</h2>
+                    <p>Circuito: '.$this->circuit.'</p>
+                </div>';
     }
 
 }

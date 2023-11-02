@@ -16,7 +16,9 @@
 
     public function __toString()
     {
-        return parent::__toString().' '.$this->speciality;
+        return '<h4>Mecanico:</h4> '.
+            parent::__toString().
+            '<p>Especialidad: '.$this->speciality.'</p>';
     }
 
 }

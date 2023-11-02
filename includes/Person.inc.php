@@ -32,11 +32,12 @@
         $day = date('d',$this->birthday);
         $monthnumber = date('n',$this->birthday);
         $month = $months[$monthnumber-1];
-        $year= date('y',$this->birthday);
+        $year= date('Y',$this->birthday);
         return $day.' de '.$month.' de '.$year;
     } 
   
     public function __toString(){ // metodo toString
-        return $this->name.$this->dateBirthday();
+        return  '<p>Nombre: '.$this->name.'</p>
+                <p>Fecha de nacimiento: '.$this->dateBirthday().'</p>';
     }
 }

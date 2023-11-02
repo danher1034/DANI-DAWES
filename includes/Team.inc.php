@@ -28,24 +28,36 @@
         }
     }
 
-    function addMechanic(Mechanic $m){
-            $mechanic[]=$m;    
+    function addMechanic(Mechanic $mecha){
+        $this->mechanic[]=$mecha;    
     }
 
-    function addRider(Rider $m){        
-            $rider[]=$m;
+    function addRider(Rider $ride){        
+        $this->rider[]=$ride;
     }
 
     public function __toString()
     {
+        $Therider='';
+        $Themechanic='';
+
         foreach($this->rider as $value){
-           $Therider = '<p>'.$value.'</p>';
+           $Therider .= '<p>'.$value.'</p>';
         }
         foreach($this->mechanic as $value){
-            $Themechanic = '<p>'.$value.'</p>';
+            $Themechanic .= '<p>'.$value.'</p>';
         }
 
-        return $this->name.$this->country.$Therider.$Themechanic;
+        return '<div>
+                    <h2>Equipo: '.$this->name.'</h2>
+                    <p>País: '.$this->country.'</p>
+                    <div>'.
+                        $Therider
+                    .'</div>
+                    <div>'.
+                        $Themechanic
+                    .'</div>
+                </div>';
             
     }
 }
