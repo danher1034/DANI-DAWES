@@ -1,0 +1,16 @@
+
+
+.team{display: inline-block;
+    height: 100%;
+    margin-left: 4%;
+    margin-right: 2%;}
+
+.prix{
+    text-align: center;
+    border: 1px solid #ccc;;
+}
+
+.pilot {
+    display: inline-block;
+    padding: 40px;
+}

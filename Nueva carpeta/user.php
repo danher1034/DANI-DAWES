@@ -35,7 +35,26 @@
                Manolo El crack</p>
     </aside>
     <article class="main">
-            main
+        <?php
+        for($i=0;$i<8;$i++){
+        echo '
+        <div class="container-main-user">
+            <div class="title-main-user">
+               <h4>Dani Agullo Heredia</h4>
+            </div>
+            <div class="body-main-user">
+                <p>Roldan es un gitano de los valles y Marcos lo predijo</p>
+            </div>
+            <div class="buttons-main-user">
+                <button type="button"><i class="fa-regular fa-heart" style="color: #1e3050;"></i></button><p>300</p>
+                <button type="button"><i class="fa-solid fa-heart-crack"></i></button><p>30</p>
+                <button type="button"><i class="fa-regular fa-comment-dots"></i></button><p>200</p>
+            </div>
+        </div>
+        <hr> 
+        ';
+    }
+        ?>   
     </article>
     <footer class="footer">FOOTER</footer>
 </body>

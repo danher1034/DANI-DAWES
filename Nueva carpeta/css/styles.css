@@ -1,7 +1,7 @@
 html {
   height: 100%;
-  margin-left: 10%;
-  margin-right: 10%;
+  margin-left: 8%;
+  margin-right: 8%;
 }
 
 body {
@@ -107,6 +107,14 @@ img {
 .main {
   grid-area: main;
   background-color: #f5f5f5;
+  max-height: 900px;
+}
+
+.main>*{
+  margin-left: 15%;
+  margin-right: 15%;
+  overflow: scroll;
+  max-height: 900px;
 }
 
 .footer {
@@ -138,11 +146,22 @@ img {
 .body-user > * {
   box-shadow: -1px 1px 7px 0px rgba(0, 0, 0, 0.75);
   padding: 10px;
+  
+}
+
+.buttons-main-user>*{
+  display: inline-block;
+}
+
+.buttons-main-user>p{
+  margin-left: 5px;
+  margin-right: 20px;
 }
 
 .revels {
   grid-area: revels;
 }
+
 .follower {
   grid-area: follower;
 }
