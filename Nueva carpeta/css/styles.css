@@ -108,13 +108,12 @@ img {
   grid-area: main;
   background-color: #f5f5f5;
   max-height: 900px;
+  overflow: scroll;
 }
 
 .main>*{
   margin-left: 15%;
   margin-right: 15%;
-  overflow: scroll;
-  max-height: 900px;
 }
 
 .footer {
