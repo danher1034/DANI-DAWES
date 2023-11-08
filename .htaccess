@@ -2,7 +2,7 @@ RewriteEngine On
 
 RewriteRule ^group/([0-9]+)$ /group.php?id=$1 [L]
 
-RewriteRule ^group/([0-9]+)/delete/([0-9]+)$ /group.php?id=$1&action=delete&album=2 [L]
+RewriteRule ^group/([0-9]+)/delete/([0-9]+)$ /group.php?id=$1&action=$2 [L]
 
 RewriteRule ^album/([0-9]+)$ /album.php?id=$1 [L]
 

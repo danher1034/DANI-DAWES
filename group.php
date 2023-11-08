@@ -30,8 +30,8 @@ require_once(__DIR__ . '/include/regularExpression.php');
     $options = array(PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES utf8');
     $conection = bdconection($bd, $user, $pass, $options);
 
-    if (isset($_GET['album'])) {;
-        $deleted = $conection->exec('DELETE c, a FROM canciones c LEFT JOIN albumes a on c.album = a.codigo where a.codigo =' . $_GET['album']);
+    if (isset($_GET['action'])) {
+        $deleted = $conection->exec('DELETE c, a FROM canciones c LEFT JOIN albumes a on c.album = a.codigo where a.codigo =' . $_GET['action']);
     }
 
     $result = $conection->prepare('SELECT * FROM grupos WHERE codigo=:nomb;');
@@ -105,10 +105,13 @@ require_once(__DIR__ . '/include/regularExpression.php');
         echo '<p class="error_login">' . $errors['years'] . '</p><br>';
     }
 
-    echo '<br> Formato: <input type="text" name="formats"><br>';
-    if (isset($errors['formats'])) {
-        echo '<p class="error_login">' . $errors['formats'] . '</p><br>';
-    }
+
+    echo '<br> Formato: <select name="formats">
+                            <option value="vinilo">vinilo</option>
+                            <option value="cd">cd</option>
+                            <option value="dvd">dvd</option>
+                            <option value="mp3">mp3</option>                            
+                        </select><br>';
 
     echo '<br> Fecha de compra: <input type="text" name="datebuy"><br>';
     if (isset($errors['datebuy'])) {

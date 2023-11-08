@@ -6,6 +6,7 @@
  */
 
 require_once(__DIR__ . '/include/bdconect.inc.php');
+require_once(__DIR__ . '/include/regularExpression.php');
 ?>
 
 <!DOCTYPE html>
@@ -18,7 +19,7 @@ require_once(__DIR__ . '/include/bdconect.inc.php');
 </head>
 
 <body>
-    <a href="index.php">
+    <a href="/index.php">
         <h1>Discografía - Dani Agullo Heredia</h1>
     </a>
     <?php
@@ -35,6 +36,12 @@ require_once(__DIR__ . '/include/bdconect.inc.php');
         $result2 = $conection->prepare('SELECT titulo,duracion,posicion FROM canciones WHERE album=:cod;');
         $result2->bindParam(':cod', $_GET['id']);
         $result2->execute();
+
+        $cancion = $conection->prepare('INSERT INTO canciones (titulo,album,duracion,posicion) VALUES (:title,:album,:duration,:position);');
+        $cancion->bindParam(':title', $_POST['title']);
+        $cancion->bindParam(':album', $_POST['album']);
+        $cancion->bindParam(':duration', $_POST['duration']);
+        $cancion->bindParam(':position', $_POST['position']);
 
         $group = $result->fetch();
         echo 'Nombre grupo: ' . $group['nombre'];
@@ -59,6 +66,44 @@ require_once(__DIR__ . '/include/bdconect.inc.php');
         }
         echo '</table>';
         echo '<br>';
+
+        if (isset($_POST['title'])) {
+            if (count($errors) < 1) {
+                $cancion->execute();
+                header('Location: /album/' . $_GET['id']);
+                exit;
+            }
+        }
+
+        echo '<form action="#" method="post" enctype="multipart/form-data">';           
+            if (isset($_POST['title'])) {
+                if (count($errors) < 1) {
+                    header('Location: /album/' . $_GET['id']);
+                    exit;
+                }
+            } 
+            echo '<br> Título: <input type="text" name="title"><br>'; // Los siguiente if se encargan de crear los input para cada apartado
+            if (isset($errors['title'])) {
+                echo '<p class="error_login">'. $errors['title'] . '</p><br>';
+            }
+
+            echo '<input type="hidden" name="album" value="' . $_GET['id'] . '">';
+                        
+            echo '<br> Duración: <input type="text" name="duration"><br>';  
+            if (isset($errors['duration'])) {
+                echo '<p class="error_login">'. $errors['duration'] . '</p><br>';
+            }
+
+            echo '<br> Posición: <input type="text" name="position"><br>';
+            if (isset($errors['position'])) {
+                echo '<p class="error_login">'. $errors['position'] . '</p><br>';
+            }
+
+                echo '<br>';
+                echo '<br>';
+                echo '<input type="submit" value="Enviar">';     
+        echo '</form>';
+
         echo '<a href="/group/' . $group['codigo'] . '">Volver</a>';
     ?>
 

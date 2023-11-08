@@ -10,9 +10,11 @@ $countryExpression ='/^[A-z ]{5,50}$/';
 $dateStartExpression ='/^[0-9]{0,4}$/';
 $titleExpression ='/^[A-z 0-9]{1,50}$/';
 $yearsExpression ='/^[0-9]{0,4}$/';
-$formatsExpression ='/^[A-z ]{2,20}$/';
 $dateBuyExpression ='/[0-9]{4}-[0-9]{2}-[0-9]{2}/';
 $priceExpression ='/^[0-9]{0,4}$/';
+$durationExpression ='/^[0-9]{0,4}$/';
+$positionExpression ='/^[0-9]{0,4}$/';
+
 
 
 $errors = []; 
@@ -77,16 +79,6 @@ if (isset($_POST['years'])) { //comprueba si el campo existe
     }
 }
 
-if (isset($_POST['formats'])) { //comprueba si el campo existe
-    if (strlen($_POST['formats'] > 0)) {
-        if (!preg_match($formatsExpression, $_POST['formats'])) { //comprueba que el usuario introducido sea valido
-            $errors['formats'] = 'El nombre deber tener almenos un caracter y máximo 50';
-        }
-    } else {
-        $errors['formats'] = 'No se ha introducido ningun dato en el código';
-    }
-}
-
 if (isset($_POST['datebuy'])) { //comprueba si el campo existe
     if (strlen($_POST['datebuy'] > 0)) {
         if (!preg_match($dateBuyExpression, $_POST['datebuy'])) { //comprueba que la fecha introducida sea valida
@@ -104,5 +96,25 @@ if (isset($_POST['price'])) { //comprueba si el campo existe
         }
     } else {
         $errors['price'] = 'No se ha introducido ningun dato en el código';
+    }
+}
+
+if (isset($_POST['duration'])) { //comprueba si el campo existe
+    if (strlen($_POST['duration'] > 0)) {
+        if (!preg_match($durationExpression, $_POST['duration'])) { //comprueba que el usuario introducido sea valido
+            $errors['duration'] = 'El nombre deber tener almenos un caracter y máximo 50';
+        }
+    } else {
+        $errors['duration'] = 'No se ha introducido ningun dato en el código';
+    }
+}
+
+if (isset($_POST['position'])) { //comprueba si el campo existe
+    if (strlen($_POST['position'] > 0)) {
+        if (!preg_match($positionExpression, $_POST['position'])) { //comprueba que el usuario introducido sea valido
+            $errors['position'] = 'El nombre deber tener almenos un caracter y máximo 50';
+        }
+    } else {
+        $errors['position'] = 'No se ha introducido ningun dato en el código';
     }
 }
