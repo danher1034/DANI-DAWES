@@ -10,8 +10,8 @@ $countryExpression ='/^[A-z ]{5,50}$/';
 $dateStartExpression ='/^[0-9]{0,4}$/';
 $titleExpression ='/^[A-z 0-9]{1,50}$/';
 $yearsExpression ='/^[0-9]{0,4}$/';
-$formatsExpression ='/^[A-z ]{3,20}$/'
-$dateBuyExpression = '/[0-9]{2}-[0-9]{2}-[0-9]{4}/';
+$formatsExpression ='/^[A-z ]{2,20}$/';
+$dateBuyExpression ='/[0-9]{4}-[0-9]{2}-[0-9]{2}/';
 $priceExpression ='/^[0-9]{0,4}$/';
 
 

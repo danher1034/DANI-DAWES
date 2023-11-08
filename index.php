@@ -27,8 +27,7 @@
         $conection = bdconection($bd, $user, $pass, $options);
 
         if (isset($_GET['delete'])) {
-            $groupCodeToDelete = $_GET['delete'];
-            $deleted = $conection->exec('DELETE c, a, g FROM canciones c LEFT JOIN albumes a on c.album = a.codigo LEFT JOIN grupos g on g.codigo = a.grupo where g.codigo = ' . $groupCodeToDelete);
+            $deleted = $conection->exec('DELETE c, a, g FROM canciones c LEFT JOIN albumes a on c.album = a.codigo LEFT JOIN grupos g on g.codigo = a.grupo where g.codigo =' . $_GET['delete']);
         }
 
         $result = $conection->query('SELECT * FROM grupos;');
