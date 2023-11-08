@@ -61,7 +61,7 @@
                     header('Location: index.php');
                     exit;
                 }
-            }
+            } 
             echo '<br> Nombre: <input type="text" name="name"><br>'; // Los siguiente if se encargan de crear los input para cada apartado
             if (isset($errors['name'])) {
                 echo '<p class="error_login">'. $errors['name'] . '</p><br>';

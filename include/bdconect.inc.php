@@ -12,4 +12,4 @@ function bdconection($bd, $user, $pass, $options)
     } catch (PDOException $e) {
         return 'Fallo de conexión: ' . $e->getMessage();
     }
-}
+} 

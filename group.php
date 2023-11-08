@@ -87,7 +87,7 @@
             }
                         
             echo '<br> Año: <input type="text" name="years"><br>';  
-            if (isset($errors['years'])) {
+            if (isset($errors['years'])) { 
                 echo '<p class="error_login">'. $errors['years'] . '</p><br>';
             }
 

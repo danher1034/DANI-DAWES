@@ -15,7 +15,7 @@ $dateBuyExpression = '/[0-9]{2}-[0-9]{2}-[0-9]{4}/';
 $priceExpression ='/^[0-9]{0,4}$/';
 
 
-$errors = [];
+$errors = []; 
 
 if (isset($_POST['name'])) { //comprueba si el campo existe
     if (strlen($_POST['name'] > 0)) {

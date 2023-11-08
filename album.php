@@ -31,7 +31,7 @@ require_once(__DIR__ . '/include/bdconect.inc.php');
         $result = $conection->prepare('SELECT a.titulo, g.nombre, g.codigo FROM albumes a, grupos g WHERE a.codigo=:cod and a.grupo=g.codigo;');
         $result->bindParam(':cod', $_GET['id']);
         $result->execute();
-
+ 
         $result2 = $conection->prepare('SELECT titulo,duracion,posicion FROM canciones WHERE album=:cod;');
         $result2->bindParam(':cod', $_GET['id']);
         $result2->execute();
