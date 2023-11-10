@@ -1,3 +1,17 @@
+<?php
+    /**
+     * @author Dani Agullo Heredia
+     * @version 1.0
+     */
+    require_once(__DIR__ . '/includes/bdconect.inc.php');
+    require_once(__DIR__ . '/includes/regularExpression.php');
+
+        $bd = 'revels';
+        $user = 'revel';
+        $pass = 'lever';
+        $options = array(PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES utf8');
+
+?>
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -19,39 +33,87 @@
                 <button><i class="fa-solid fa-magnifying-glass"></i></button>
             </form>
     </nav>
-    <aside class="sidebar">
-            <img src="Idyd_Roberto-Dupuis-600.png" alt="" height="30%" >
-            <br>
-            <br>
-            <h3>Manolo</h3>
-            <br>
-            <div class="followers">
-                <p class="revels">6 revels</p>
-                <p class="follower">166 seguidores</p>
-                <p class="follows">168 seguidos</p>
-            </div>
-            <p>Manolo El Manuelas <br>
-               Diseñador de los manolitos <br>
-               Manolo El crack</p>
+    <aside class="sidebar-user">
+        <?php
+            $conection = bdconection($bd, $user, $pass, $options);
+            $user_info = $conection->prepare('SELECT u.usuario, f.userfollowed FROM users u LEFT JOIN follows f ON u.id = f.userfollowed WHERE u.id=:id_user;');
+            $user_info->bindParam(':id_user', $_GET['id']);
+            $user_info->execute();
+
+            $user_followed = $conection->prepare('SELECT userid FROM follows WHERE userid=:id_user;');
+            $user_followed->bindParam(':id_user', $_GET['id']);
+            $user_followed->execute();
+
+            
+            $revels_info = $conection->prepare('SELECT r.texto,r.fecha,l.userid ,d.revelid FROM revels r LEFT JOIN likes l ON r.id = l.revelid LEFT JOIN dislikes d ON r.id = d.revelid  WHERE r.userid=:id_user ORDER BY r.fecha DESC;');
+            $revels_info->bindParam(':id_user', $_GET['id']);
+            $revels_info->execute();
+
+            $user_name = $user_info->fetch();
+
+            if(($user_name['userfollowed'] !== null)){
+                $followers = $user_info->rowCount();
+            }else{
+                $followers = 0;
+            }
+
+            $followed = $user_followed->rowCount();
+
+            $revels_number = $revels_info->rowCount();
+
+            echo '<h2>'.$user_name['usuario'].'</h2>';
+            echo '<br>';
+            echo '<div class="followers">';
+                echo '<p class="revels">'.$revels_number.' revels</p>';
+                echo '<p class="follower">'.$followers.' seguidores</p>';
+                echo '<p class="follows">'.$followed.' seguidos</p>';
+            echo '</div>';
+        ?>
+    </aside>
+    <aside class="sidebar-user2">
+        <?php
+            echo '<h2>Manolo</h2>';
+            echo '<br>';
+            echo '<div class="followers">';
+                echo '<p class="revels">6 revels</p>';
+                echo '<p class="follower">166 seguidores</p>';
+                echo '<p class="follows">168 seguidos</p>';
+            echo '</div>';
+        ?>
     </aside>
     <article class="main">
         <?php
-        for($i=0;$i<8;$i++){
-            echo '<div class="container-main-user">
-                    <div class="title-main-user">
-                        <h4>Dani Agullo Heredia</h4>
+
+            $revels = $revels_info->fetchAll()
+
+            if(($revels['userid'] !== null)){
+                $likes = $userid->rowCount();
+            }else{
+                $likes = 0;
+            }
+
+            if(($revels['revelid'] !== null)){
+                $dislikes = $revelid->rowCount();
+            }else{
+                $dislikes = 0;
+            }
+
+            foreach ($revels as $info) {
+                echo '<div class="container-main-user">
+                        <div class="title-main-user">
+                            <h4>'.$user_name['usuario'].'</h4>
+                        </div>
+                        <div class="body-main-user">
+                            <p>'.$info['texto'].'</p>
+                        </div>
+                        <div class="buttons-main-user">
+                            <a href="/index/insert/' . $info['userid'] . '"><i class="fa-regular fa-heart"></i></a><p>'.$likes.'</p>
+                            <a href="/index/insert/' . $info['userid'] . '"><i class="fa-solid fa-heart-crack"></i></a><p>'.$dislikes.'</p>
+                            <button type="button"><i class="fa-regular fa-comment-dots"></i></button><p>200</p>
+                        </div>
                     </div>
-                    <div class="body-main-user">
-                        <p>Roldan es un gitano de los valles y Marcos lo predijo</p>
-                    </div>
-                    <div class="buttons-main-user">
-                        <button type="button"><i class="fa-regular fa-heart" style="color: #1e3050;"></i></button><p>300</p>
-                        <button type="button"><i class="fa-solid fa-heart-crack"></i></button><p>30</p>
-                        <button type="button"><i class="fa-regular fa-comment-dots"></i></button><p>200</p>
-                    </div>
-                </div>
-                <hr>';
-        }
+                    <hr>';
+            }
         ?>   
     </article>
     <footer class="footer">FOOTER</footer>

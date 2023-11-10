@@ -5,6 +5,7 @@
  * @version 1.0
  */
 
+require_once(__DIR__ . '/includes/bdconect.inc.php');
 require_once(__DIR__.'/includes/User.inc.php');
 require_once(__DIR__.'/includes/regularExpression.php');
 ?>
@@ -29,6 +30,9 @@ require_once(__DIR__.'/includes/regularExpression.php');
         <br>
         <h4>Regístrate para ver revels de tus amigos</h4>
         <?php
+                if (isset($_POST['position'])) {
+                    
+                }else{
                 echo '<form action="#" method="post" enctype="multipart/form-data">';           
                         if (isset($_POST['user'])) {
                             if (count($errors) < 1) {
@@ -36,13 +40,9 @@ require_once(__DIR__.'/includes/regularExpression.php');
                                 exit;
                             }
                         }
-                        echo '<br> Mail o Teléfono: <input type="text" name="mail|phone"><br>'; // Los siguiente if se encargan de crear los input para cada apartado
-                        if (isset($errors['mail|phone'])) {
-                            echo '<p class="error_login">'. $errors['mail|phone'] . '</p><br>';
-                        }
-                        echo '<br> Nombre: <input type="text" name="name"><br>';
-                        if (isset($errors['name'])) {
-                            echo '<p class="error_login">'. $errors['name'] . '</p><br>';
+                        echo '<br> Mail: <input type="text" name="mail"><br>'; // Los siguiente if se encargan de crear los input para cada apartado
+                        if (isset($errors['mail'])) {
+                            echo '<p class="error_login">'. $errors['mail'] . '</p><br>';
                         }
                         echo '<br>Usuario: <input type="text" name="user"><br>';  
                         if (isset($errors['user'])) {
@@ -56,6 +56,9 @@ require_once(__DIR__.'/includes/regularExpression.php');
                         echo '<br>';
                         echo '<input type="submit" value="Enviar">';     
                 echo '</form>';
+
+                echo '<a href="/user.php?id=4">Prueba User</a>';
+            }
         
         ?>
     </div>

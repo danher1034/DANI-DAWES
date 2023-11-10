@@ -5,18 +5,18 @@
      */
 
 $mailAnduserExpression ='/^([a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+.[a-zA-Z]{2,4}$)|[A-z]{3,20}/';
-$mailAndphoneExpression ='/^([a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+.[a-zA-Z]{2,4}$)|([0-9]{9})/';
+$mailExpression ='/^([a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+.[a-zA-Z]{2,4}$)/';
 $nameExpression ='/^[A-z ]{5,50}$/';
 $userExpression ='/[A-z0-9 ]{3,20}/';
 $passwordExpression ='/^((?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=\S+$)(?=.*[;:\.,!¡\?¿@#\$%\^&\-_+=\(\)\[\]\{\}])).{8,20}$/';
  
-if (isset($_POST['mail|phone'])) { //comprueba si el campo existe
-    if (strlen($_POST['mail|phone'] > 0)) {
-        if (!preg_match($mailAndphoneExpression, $_POST['mail|phone'])) { //comprueba que el correo introducido sea valido
-            $errors['mail|phone'] = 'El mail deber serguir el siguiente ***@***.***  y el telefono debe contener 9 digitos ';
+if (isset($_POST['mail'])) { //comprueba si el campo existe
+    if (strlen($_POST['mail'] > 0)) {
+        if (!preg_match($mailExpression, $_POST['mail'])) { //comprueba que el correo introducido sea valido
+            $errors['mail'] = 'El mail deber serguir el siguiente ***@***.***';
         }
     } else {
-        $errors['mail|phone'] = 'No se ha introducido ningun dato en el mail ni telefono';
+        $errors['mail'] = 'No se ha introducido ningun dato en el mail ';
     }
 }
 
@@ -27,16 +27,6 @@ if (isset($_POST['user'])) { //comprueba si el campo existe
         }
     } else {
         $errors['user'] = 'No se ha introducido ningun dato en el código';
-    }
-}
-
-if (isset($_POST['name'])) { //comprueba si el campo existe
-    if (strlen($_POST['name'] > 0)) {
-        if (!preg_match($nameExpression, $_POST['name'])) { //comprueba que el nombre introducido sea valido
-            $errors['name'] = 'El nombre debe ser solo letras (mínimo 3 y máximo 20)';
-        }
-    } else {
-        $errors['name'] = 'No se ha introducido ningun dato en el nombre';
     }
 }
 

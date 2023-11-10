@@ -5,6 +5,7 @@
  */
 require_once(__DIR__.'/includes/User.inc.php');
 require_once(__DIR__.'/includes/regularExpression.php');
+require_once(__DIR__ . '/includes/bdconect.inc.php');
 
 ?>
 <!DOCTYPE html>
@@ -27,17 +28,11 @@ require_once(__DIR__.'/includes/regularExpression.php');
         <h4>Inicia sesión para ver revels de tus amigos.</h4>
         <form action="#" method="post" enctype="multipart/form-data">
             <?php
-                echo '<br> Mail o Usuario: <input type="text" 
-                                                  name="mail|user"
-                                                  required" >
-                                                <br>'; // Los siguiente if se encargan de crear los input para cada apartado
+                echo '<br> Mail o Usuario: <input type="text" name="mail|user" required" ><br>'; // Los siguiente if se encargan de crear los input para cada apartado
                 if (isset($errors['mail|user'])) {
                     echo '<p class="error_login">'.$errors['mail|user'].'</p><br>';
                 }
-                echo '<br> Contraseña : <input type="password" 
-                                               name="password"
-                                               required" >
-                                            <br>';
+                echo '<br> Contraseña : <input type="password" name="password" required" ><br>';
                 if (isset($errors['password'])) {
                     echo '<p class="error_login">'.$errors['password'].'</p><br>';
                 }
