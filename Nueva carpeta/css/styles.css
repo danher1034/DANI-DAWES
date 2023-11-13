@@ -88,7 +88,68 @@ img {
 .body-revels > * {
   box-shadow: -1px 1px 7px 0px rgba(0, 0, 0, 0.75);
   padding: 10px;
+}
+
+.buttons-main-revel>*{
+  display: inline-block;
+}
+
+.buttons-main-revel{
   text-align: center;
+}
+
+.buttons-main-revel>p{
+  margin-left: 5px;
+  margin-right: 40px;
+  text-decoration: none;
+  color: inherit;
+}
+
+.hour-main-revel{
+  color: gray;
+  font-size: 15px;
+}
+
+.buttons-main-comment{
+  text-align: center;
+}
+
+.buttons-main-comment>p{
+  margin-left: 5px;
+  margin-right: 40px;
+  text-decoration: none;
+  color: inherit;
+}
+
+.hour-main-comment{
+  color: gray;
+  font-size: 15px;
+}
+
+.comment-container {
+  display: inline-flex;
+}
+
+.coment_form>#comment{
+  background-color: #1faffc;
+    padding: 10px 15px;
+    border: 0;
+    border-radius: 10px;
+    color: #f5f5f5;
+    cursor: pointer;
+    margin-left: 40px;
+}
+
+.coment_form>#input-coment{
+  WIDTH: 600px; 
+  HEIGHT: auto;
+  font-size: 20px;
+  border: 0;
+  background-color: #f5f5f5;
+}
+
+.coment_form>#comment:hover{
+  background-color: #7099c1;
 }
 
 .navbar {
@@ -140,7 +201,9 @@ img {
   grid-area: sidebarUser2;
   background-color: #cffdd3;
 }
-
+.sidebar-user2>.sidebar-friend>#enlace_userRevel:hover{
+  background-color: #98a3ae;
+}
 .body-user {
   display: grid;
   gap: 10px;
@@ -156,7 +219,6 @@ img {
 .body-user > * {
   box-shadow: -1px 1px 7px 0px rgba(0, 0, 0, 0.75);
   padding: 10px;
-  
 }
 
 .buttons-main-user>*{
@@ -166,6 +228,14 @@ img {
 .buttons-main-user>p{
   margin-left: 5px;
   margin-right: 20px;
+  text-decoration: none;
+  color: inherit;
+}
+
+#enlace_userRevel{
+  display: block;
+  text-decoration: none;
+  color: inherit;
 }
 
 .revels {
@@ -190,7 +260,7 @@ img {
   position: relative;
 }
 
-.nav_form>input{
+.nav_form>.input-nav{
   width: 350px;
   padding: 10px;
   padding-right: 35px;
@@ -199,7 +269,7 @@ img {
   font-size: 1rem;
 }
 
-.nav_form>button{
+.nav_form>.button-nav{
   background-color:#9fddff;
   padding: 10px 15px;
   position: absolute;
@@ -213,10 +283,25 @@ img {
   cursor: pointer;
 }
 
-.nav_form>button:hover{
+.nav_form>.button-nav:hover{
   background-color: #7099c1;
 }
 
+.body-index2 {
+  display: grid;
+  gap: 10px;
+  grid-template:
+      "navbar  navbar" 100px
+      "sidebar main"   auto
+      "footer  footer" 50px /
+      200px    auto;
+      grid-template-columns: 25% 75%;
+}
+
+.body-index2 > * {
+  box-shadow: -1px 1px 7px 0px rgba(0, 0, 0, 0.75);
+  padding: 10px;
+}
 
   /* 
   .color1 {color: #74808b;}
