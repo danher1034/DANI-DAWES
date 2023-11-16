@@ -13,6 +13,7 @@ require_once(__DIR__.'/includes/regularExpression.php');
         $user = 'revel';
         $pass = 'lever';
         $options = array(PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES utf8');
+        $sesion=6;
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -107,10 +108,63 @@ require_once(__DIR__.'/includes/regularExpression.php');
             <article class="main">
                 <?php         
                     $revels_info = $conection->prepare('SELECT r.texto, r.fecha, r.id,r.userid,(SELECT u.usuario from users u where u.id = r.userid) AS users, (SELECT count(*) from likes l where r.id = l.revelid) AS liked, (SELECT count(*) from dislikes d where r.id = d.revelid) AS disliked, (SELECT count(*) from comments c where r.id = c.revelid) AS comments FROM revels r WHERE r.userid=:id_user OR r.userid IN (SELECT userfollowed FROM follows WHERE userid = :id_user) ORDER BY r.fecha DESC;');
-                    $revels_info->bindParam(':id_user', $_GET['id']);
+                    $revels_info->bindParam(':id_user', $sesion);
                     $revels_info->execute();
                     
                     $revels = $revels_info->fetchAll();
+
+                    $select_like = $conection->prepare('SELECT userid FROM likes WHERE userid=:iduser and revelid=:idrevel;');
+                    $select_like->bindParam(':idrevel', $_GET['like']);
+                    $select_like->bindParam(':iduser', $sesion);
+                    $select_like->execute();
+
+                    $select_dislike = $conection->prepare('SELECT userid FROM dislikes WHERE userid=:iduser and revelid=:idrevel;');
+                    $select_dislike->bindParam(':idrevel', $_GET['dislike']);
+                    $select_dislike->bindParam(':iduser', $sesion);
+                    $select_dislike->execute();
+
+
+                    if(isset($_GET['like'])){
+                        if(count($select_like->fetchAll())===0 && count($select_dislike->fetchAll())===0){                        
+                            $add_like = $conection->prepare('INSERT INTO likes (revelid, userid) VALUES (:idrevel,:iduser);');
+                            $add_like->bindParam(':idrevel', $_GET['like']);
+                            $add_like->bindParam(':iduser', $sesion);
+
+                            if (isset($_GET['like'])) {
+                                $add_like->execute();
+                                header('Location:/index');
+                                exit;
+                            }                                           
+                        }else{
+                            $deleteLike = $conection->prepare('DELETE FROM likes where userid =:iduser and revelid=:idrevel ;');
+                            $deleteLike->bindParam(':idrevel', $_GET['like']);
+                            $deleteLike->bindParam(':iduser', $sesion);
+                            $deleteLike->execute();  
+                            header('Location:/index');                         
+                        }
+                    }
+
+
+                    if(isset($_GET['dislike'])){
+                        if(count($select_dislike->fetchAll())===0 && count($select_like->fetchAll())===0){                        
+                            $add_dislike = $conection->prepare('INSERT INTO dislikes (revelid, userid) VALUES (:idrevel,:iduser);');
+                            $add_dislike->bindParam(':idrevel', $_GET['dislike']);
+                            $add_dislike->bindParam(':iduser', $sesion);
+
+                            if (isset($_GET['dislike'])) {
+                                $add_dislike->execute();
+                                header('Location:/index');
+                                exit;
+                            }                                           
+                        }else{
+                            $deletedisLike = $conection->prepare('DELETE FROM dislikes where userid =:iduser and revelid=:idrevel ;');
+                            $deletedisLike->bindParam(':idrevel', $_GET['dislike']);
+                            $deletedisLike->bindParam(':iduser', $sesion);
+                            $deletedisLike->execute();  
+                            header('Location:/index');                         
+                        }
+                    }
+
 
                     foreach ($revels as $info) {
                         echo '<div class="container-main-user"> 
@@ -125,8 +179,8 @@ require_once(__DIR__.'/includes/regularExpression.php');
                             </a>
                         </div>
                         <div class="buttons-main-user">
-                            <a href="/index/insert/' . $info['id'] . '"><i class="fa-regular fa-heart"></i></a><p>'.$info['liked'].'</p>
-                            <a href="/index/insert/' . $info['id'] . '"><i class="fa-solid fa-heart-crack"></i></a><p>'.$info['disliked'].'</p>
+                            <a href="/index/like/'. $info['id'] . '"><i class="fa-regular fa-thumbs-up"></i></a><p>'.$info['liked'].'</p>
+                            <a href="/index/dislike/'. $info['id'] . '"><i class="fa-regular fa-thumbs-down"></i></a><p>'.$info['disliked'].'</p>
                             <a href="/index/insert/' . $info['id'] . '"><i class="fa-regular fa-comment-dots"></i></a><p>'.$info['comments'].'</p>
                         </div>
                         </div>

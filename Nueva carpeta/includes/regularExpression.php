@@ -4,7 +4,6 @@
      * @version 1.0
      */
 
-$mailAnduserExpression ='/^([a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+.[a-zA-Z]{2,4}$)|[A-z]{3,20}/';
 $mailExpression ='/^([a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+.[a-zA-Z]{2,4}$)/';
 $nameExpression ='/^[A-z ]{5,50}$/';
 $userExpression ='/[A-z0-9 ]{3,20}/';
@@ -53,12 +52,3 @@ if (isset($_POST['password'])) { //comprueba si el campo existe
     }
 } 
  
-if (isset($_POST['mail|user'])) { //comprueba si el campo existe
-    if (strlen($_POST['mail|user'] > 0)) {
-        if (!preg_match($mailAnduserExpression, $_POST['mail|user'])) { //comprueba que el correo introducido sea valido
-            $errors['mail|user'] = 'El mail deber serguir el siguiente ***@***.*** ';
-        }
-    } else {
-        $errors['mail|user'] = 'No se ha introducido ningun dato en el mail ni usuario';
-    }
-}

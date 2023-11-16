@@ -4,9 +4,12 @@
  * @version 1.0
  */
 require_once(__DIR__.'/includes/User.inc.php');
-require_once(__DIR__.'/includes/regularExpression.php');
 require_once(__DIR__ . '/includes/bdconect.inc.php');
 
+        $bd = 'revels';
+        $user = 'revel';
+        $pass = 'lever';
+        $options = array(PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES utf8');
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -25,25 +28,52 @@ require_once(__DIR__ . '/includes/bdconect.inc.php');
                 <h1>Revels</h1>
             </div>
             <br>
-            <h4>Inicia sesión para ver revels de tus amigos.</h4>
-            <form action="#" method="post" enctype="multipart/form-data">
+            <h4>Inicia sesión para ver revels de tus amigos.</h4>         
                 <?php
-                    echo '<br> Mail o Usuario: <input type="text" name="mail|user" required" ><br>'; // Los siguiente if se encargan de crear los input para cada apartado
-                    if (isset($errors['mail|user'])) {
-                        echo '<p class="error_login">'.$errors['mail|user'].'</p><br>';
-                    }
-                    echo '<br> Contraseña : <input type="password" name="password" required" ><br>';
-                    if (isset($errors['password'])) {
-                        echo '<p class="error_login">'.$errors['password'].'</p><br>';
-                    }
-                    echo '<br>';
-                    echo '<br>';
-                    echo '<input type="submit" value="Enviar">';
-
-                    echo '<a href="/user/6">Prueba User</a><br>';
                     
-                    echo '<a href="/index/6">Prueba Index</a>';
-                ?>
+                    $conection = bdconection($bd, $user, $pass, $options);
+
+                    $login_select = $conection->prepare('SELECT usuario, contrasenya from users where usuario=:usuar;');
+                    $login_select->bindParam(':usuar', $_POST['user']);
+
+                   
+
+                    if(isset($_POST['user'])){
+                        $login_select->execute();
+                        $login_user = $login_select->fetch();
+                    }
+
+                    
+        
+                    if(isset($_POST['user'])){
+                        if(password_verify($_POST['password'], $login_user['contrasenya']) && $login_user['usuario']==$_POST['user']){
+                            $_SESSION['user']=$_POST['user'];   
+                        }else{
+                            $errors['user'] ='Usuario o contraseña incorrecta, intetanlo otra vez';
+                        }
+                    }
+
+                    
+
+                    echo '<form action="#" method="post" enctype="multipart/form-data">';
+
+                        if (isset($errors['user'])) {
+                            echo '<p class="error_login">'. $errors['user'] . '</p><br>';
+                        }
+
+                        echo '<br>';
+
+                        echo '<br> Usuario: <input type="text" name="user" required" ><br>'; // Los siguiente if se encargan de crear los input para cada apartado
+                       
+                        echo '<br> Contraseña : <input type="password" name="password" required" ><br>';
+                        
+                
+                        echo '<br>';
+                        echo '<br>';
+                        echo '<input type="submit" value="Enviar">';
+
+                    echo '</form>';
+                ?>     
         </div>
         <div class="Sign-up" >
             <p>¿No tienes cuenta en revels? <a href="index.php">Regístrate</a></p>
