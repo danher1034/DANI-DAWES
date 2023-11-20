@@ -9,11 +9,12 @@ body {
   min-height: 100%;
 }
 
-.tittle {
+.tittle-login {
+  grid-area: Tittle-login;
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: #1b2634;
+  background-color: #41554d;
 }
 
 h1 {
@@ -47,23 +48,26 @@ img {
 
 .Sign-in{
   grid-area: Sign-in;
-  background-color: #f5f5f5;
+  background-color: #f4f8fa;
 }
 
 .Sign-up{
   grid-area: Sign-up;
-  background-color: #f5f5f5;
+  background-color: #f4f8fa;
 }
 
 .body-login{ 
+  background-image:'img/backgroundimage.jpg';
   display: grid;
-  gap: 10px;
+  gap: 5px;
   margin-top: 1%;
   grid-template:
+    "Tittle-login" 100px
     "Sign-in" auto
     "Sign-up" 100px
     "footer"  50px;
 }
+
 
 .body-login > *{
   box-shadow: -1px 1px 7px 0px rgba(0, 0, 0, 0.75);
@@ -167,24 +171,62 @@ img {
 
 .title_user_follow>a{
   margin-left: 10%;
+  display: inline-block;
+  padding: 10px 20px;
+  background-color: white;
+  color: #fff;
+  text-decoration: none;
+  border-radius: 20px;
+  margin: 5px;
+  transition: background-color 0.3s;
+}
+
+.title_user_follow>#seguir_user{
+  background-color: gray;
+  color: #f4f8fa;
+}
+
+.title_user_follow>#seguir_user:hover{
+  background-color: rgb(153, 151, 151);
+}
+
+.sidebar-suggestions>#seguir_user{
+  margin-left: 10%;
+  display: inline-block;
+  padding: 10px 20px;
+  background-color: white;
+  color: #fff;
+  text-decoration: none;
+  border-radius: 20px;
+  margin: 5px;
+  transition: background-color 0.3s;
+}
+
+.sidebar-suggestions>#seguir_user{
+  background-color: gray;
+  color: #f4f8fa;
+}
+
+.sidebar-suggestions>#seguir_user:hover{
+  background-color: rgb(153, 151, 151);
 }
 
 .coment_form>#comment{
-  background-color: #1faffc;
+  background-color: gray;
     padding: 10px 15px;
     border: 0;
     border-radius: 10px;
-    color: #f5f5f5;
+    color: #f4f8fa;
     cursor: pointer;
     margin-left: 40px;
 }
 
 .revel_form>#newrevels{
-  background-color: #1faffc;
+  background-color: gray;
   padding: 10px 15px;
   border: 0;
   border-radius: 10px;
-  color: #f5f5f5;
+  color: #f4f8fa;
   cursor: pointer;
   margin-left: 40px;
 }
@@ -194,15 +236,15 @@ img {
   HEIGHT: auto;
   font-size: 20px;
   border: 0;
-  background-color: #f5f5f5;
+  background-color: #f4f8fa;
 }
 
 .coment_form>#comment{
-  background-color: #1faffc;
+  background-color: gray;
     padding: 10px 15px;
     border: 0;
     border-radius: 10px;
-    color: #f5f5f5;
+    color: #f4f8fa;
     cursor: pointer;
     margin-left: 40px;
 }
@@ -212,16 +254,16 @@ img {
   HEIGHT: auto;
   font-size: 20px;
   border: 0;
-  background-color: #f5f5f5;
+  background-color: #f4f8fa;
 }
 
 .coment_form>#comment:hover{
-  background-color: #7099c1;
+  background-color: #9b9c9e;
 }
 
 .navbar {
   grid-area: navbar;
-  background-color: #1b2634;
+  background-color: #41554d;
   color:#e1dbdd;
   display: flex;
   justify-content: space-between;
@@ -230,12 +272,12 @@ img {
 
 .sidebar {
   grid-area: sidebar;
-  background-color: #fdcfcf;
+  background-color: #e1e0dd;
 }
 
 .main {
   grid-area: main;
-  background-color: #f5f5f5;
+  background-color: #f4f8fa;
   max-height: 800px;
   overflow: scroll;
 }
@@ -247,7 +289,7 @@ img {
 
 .footer {
   grid-area: footer;
-  background-color: #8c96a0;
+  background-color: #41554d;
 }
 
 .error_login{
@@ -262,30 +304,35 @@ img {
 
 .sidebar2 {
   grid-area: sidebar2;
-  background-color: #f19494;
+  background-color: #e1e0dd;
 }
 
 .sidebar-accounts{
   grid-area: sidebar-account;
-  background-color: #cffdd3;
+  background-color: #bebfb4;
 }
 
 .sidebar-user {
   grid-area: sidebarUser;
-  background-color: #fdcfcf;
+  background-color: #e1e0dd;
 }
 .sidebar-user2 {
   grid-area: sidebarUser2;
-  background-color: #cffdd3;
+  background-color: #bebfb4;
+}
+
+.sidebar-user3 {
+  grid-area: sidebarUser3;
+  background-color: #e1e0dd;
 }
 
 .sidebar-account {
   grid-area: sidebarAccount;
-  background-color: #fdcfcf;
+  background-color: #e1e0dd;
 }
 .sidebar-account2 {
   grid-area: sidebarAccount2;
-  background-color: #cffdd3;
+  background-color: #bebfb4;
 }
 
 .sidebar-suggestions{
@@ -346,9 +393,7 @@ img {
   margin-left: auto;
 }
 
-#seguir_user:hover{
-  color: #1faffc;
-}
+
 
 .revels {
   grid-area: revels;
@@ -382,7 +427,7 @@ img {
 }
 
 .nav_form>.button-nav{
-  background-color:#9fddff;
+  background-color:#1d271b;
   padding: 10px 15px;
   position: absolute;
   border: 0;

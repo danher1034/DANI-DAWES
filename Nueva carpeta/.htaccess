@@ -10,7 +10,7 @@ RewriteRule ^index/dislike/([0-9]+)$ /index.php?dislike=$1 [L]
 
 RewriteRule ^login$ /login.php? [L]
 
-RewriteRule ^revel/([0-9]+)$ /revel.php?id=$1 [L]
+RewriteRule ^revel/([0-9]+)$ /revel.php?id=$1 [L] 
 
 RewriteRule ^user/([0-9]+)$ /user.php?id=$1 [L]
 

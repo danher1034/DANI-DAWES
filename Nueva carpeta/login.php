@@ -22,11 +22,11 @@ require_once(__DIR__ . '/includes/bdconect.inc.php');
         <title>Login</title>
     </head>
     <body class="body-login">
+        <div class="tittle-login">
+            <img src="img/logo-revels.png" alt="Logo" width="80" height="80">
+            <h1>Revels</h1>
+        </div>
         <div class="Sign-in" >
-            <div class="tittle">
-                <img src="img/logo-revels.png" alt="Logo" width="80" height="80">
-                <h1>Revels</h1>
-            </div>
             <br>
             <h4>Inicia sesión para ver revels de tus amigos.</h4>         
                 <?php

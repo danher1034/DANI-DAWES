@@ -9,7 +9,7 @@ require_once(__DIR__ . '/includes/bdconect.inc.php');
         session_start();
         $bd = 'revels';
         $user = 'revel';
-        $pass = 'lever';
+        $pass = 'lever'; 
         $options = array(PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES utf8');
         $date=date("Y-m-d H:i:s");
 ?>
