@@ -8,9 +8,21 @@ $mailExpression ='/^([a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+.[a-zA-Z]{2,4}$)/';
 $nameExpression ='/^[A-z ]{5,50}$/';
 $userExpression ='/[A-z0-9 ]{3,20}/';
 $passwordExpression ='/^((?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=\S+$)(?=.*[;:\.,!¡\?¿@#\$%\^&\-_+=\(\)\[\]\{\}])).{8,20}$/';
-$commentExpression ='/[A-z0-9 ]{1,50}/';
+$commentExpression ='/[A-z0-9 \p{P}]{1,50}/u';
+$newrevelExpression ='/[A-z0-9 \p{P}]{1,100}/u';
  
 $errors = []; 
+
+
+if (isset($_POST['newrevel'])) { //comprueba si el campo existe
+    if (strlen($_POST['newrevel'] > 0)) {
+        if (!preg_match($newrevelExpression, $_POST['newrevel'])) { //comprueba que el usuario introducido sea valido
+            $errors['newrevel'] = 'El revel debe tener al menos un caracter y máximo 50';
+        }
+    } else {
+        $errors['newrevel'] = 'No se ha introducido ningun dato en el revel';
+    }
+}
 
 if (isset($_POST['comment'])) { //comprueba si el campo existe
     if (strlen($_POST['comment'] > 0)) {
@@ -18,7 +30,7 @@ if (isset($_POST['comment'])) { //comprueba si el campo existe
             $errors['comment'] = 'El comentario debe tener al menos un caracter y máximo 50';
         }
     } else {
-        $errors['comment'] = 'No se ha introducido ningun dato en el código';
+        $errors['comment'] = 'No se ha introducido ningun dato en el comentario';
     }
 }
 

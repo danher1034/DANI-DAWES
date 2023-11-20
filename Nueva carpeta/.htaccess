@@ -1,0 +1,33 @@
+RewriteEngine On
+
+RewriteRule ^index$ /index.php [L]
+
+RewriteRule ^index/like/([0-9]+)$ /index.php?like=$1 [L]
+
+RewriteRule ^index/follow/([0-9]+)$ /index.php?follow=$1 [L]
+
+RewriteRule ^index/dislike/([0-9]+)$ /index.php?dislike=$1 [L]
+
+RewriteRule ^login$ /login.php? [L]
+
+RewriteRule ^revel/([0-9]+)$ /revel.php?id=$1 [L]
+
+RewriteRule ^user/([0-9]+)$ /user.php?id=$1 [L]
+
+RewriteRule ^revel/([0-9]+)/like/([0-9]+)$ /revel.php?id=$1&like=$2 [L]
+
+RewriteRule ^revel/([0-9]+)/dislike/([0-9]+)$ /revel.php?id=$1&dislike=$2 [L]
+
+RewriteRule ^user/([0-9]+)/like/([0-9]+)$ /user.php?id=$1&like=$2 [L]
+
+RewriteRule ^user/([0-9]+)/unfollow/([0-9]+)$ /user.php?id=$1&unfollow=$2 [L]
+
+RewriteRule ^user/([0-9]+)/follow/([0-9]+)$ /user.php?id=$1&follow=$2 [L]
+
+RewriteRule ^user/([0-9]+)/dislike/([0-9]+)$ /user.php?id=$1&dislike=$2 [L]
+
+RewriteRule ^account$ /account.php? [L]
+
+RewriteRule ^account/cancel/([01])$ /account.php?cancel=$1 [L]
+
+RewriteRule ^account/delete/([0-9]+)$ /account.php?delete=$1 [L]

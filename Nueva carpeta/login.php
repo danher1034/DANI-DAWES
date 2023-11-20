@@ -5,7 +5,7 @@
  */
 require_once(__DIR__.'/includes/User.inc.php');
 require_once(__DIR__ . '/includes/bdconect.inc.php');
-
+        session_start();
         $bd = 'revels';
         $user = 'revel';
         $pass = 'lever';
@@ -33,41 +33,32 @@ require_once(__DIR__ . '/includes/bdconect.inc.php');
                     
                     $conection = bdconection($bd, $user, $pass, $options);
 
-                    $login_select = $conection->prepare('SELECT usuario, contrasenya from users where usuario=:usuar;');
-                    $login_select->bindParam(':usuar', $_POST['user']);
-
-                   
+                    $login_select = $conection->prepare('SELECT usuario, contrasenya, id from users where usuario=:usuar;');
+                    $login_select->bindParam(':usuar', $_POST['user']);              
 
                     if(isset($_POST['user'])){
                         $login_select->execute();
                         $login_user = $login_select->fetch();
-                    }
-
-                    
+                    }              
         
                     if(isset($_POST['user'])){
                         if(password_verify($_POST['password'], $login_user['contrasenya']) && $login_user['usuario']==$_POST['user']){
-                            $_SESSION['user']=$_POST['user'];   
+                            $_SESSION['user']=$login_user['id'];
+                            $_SESSION['logged'] = TRUE;  
+                            header('Location:/index');
                         }else{
                             $errors['user'] ='Usuario o contraseña incorrecta, intetanlo otra vez';
                         }
-                    }
-
-                    
+                    }             
 
                     echo '<form action="#" method="post" enctype="multipart/form-data">';
 
                         if (isset($errors['user'])) {
                             echo '<p class="error_login">'. $errors['user'] . '</p><br>';
                         }
-
                         echo '<br>';
-
-                        echo '<br> Usuario: <input type="text" name="user" required" ><br>'; // Los siguiente if se encargan de crear los input para cada apartado
-                       
-                        echo '<br> Contraseña : <input type="password" name="password" required" ><br>';
-                        
-                
+                        echo '<br> Usuario: <input type="text" name="user" required" ><br>'; // Los siguiente if se encargan de crear los input para cada apartado                      
+                        echo '<br> Contraseña : <input type="password" name="password" required" ><br>';                              
                         echo '<br>';
                         echo '<br>';
                         echo '<input type="submit" value="Enviar">';

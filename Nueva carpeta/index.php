@@ -8,12 +8,13 @@
 require_once(__DIR__ . '/includes/bdconect.inc.php');
 require_once(__DIR__.'/includes/User.inc.php');
 require_once(__DIR__.'/includes/regularExpression.php');
-
+        session_start();
         $bd = 'revels';
         $user = 'revel';
         $pass = 'lever';
         $options = array(PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES utf8');
-        $sesion=6;
+        $date=date("Y-m-d H:i:s");
+        $conection = bdconection($bd, $user, $pass, $options); 
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -28,7 +29,7 @@ require_once(__DIR__.'/includes/regularExpression.php');
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 
-<?php if (isset($_POST['usuario'])){ ?>
+<?php if (!isset($_SESSION['logged'])){ ?>
     <body class="body-index">
     <div class="Sign-up" >
         <div class="tittle">
@@ -37,14 +38,29 @@ require_once(__DIR__.'/includes/regularExpression.php');
         </div>
         <br>
         <h4>Regístrate para ver revels de tus amigos</h4>
-        <?php
-                if (isset($_POST['position'])) {
-                    
-                }else{
+        <?php              
+
+                if(isset($_POST['user'])){
+
+                    $password=$_POST['password'];
+                    $encriptedPassword=password_hash($password,PASSWORD_DEFAULT);
+
+                    $add_user = $conection->prepare('INSERT INTO users (usuario, contrasenya, email) VALUES (:user, :passwords, :email);');
+                    $add_user->bindParam(':user', $_POST['user']);
+                    $add_user->bindParam(':email', $_POST['mail']);
+                    $add_user->bindParam(':passwords', $encriptedPassword);
+
+                    if (isset($_POST['user'])) {
+                        $add_user->execute();
+                        header('Location:/login');
+                        exit;
+                    }
+                }
+
                 echo '<form action="#" method="post" enctype="multipart/form-data">';           
                         if (isset($_POST['user'])) {
                             if (count($errors) < 1) {
-                                header('Location: /index.php');
+                                header('Location:/index');
                                 exit;
                             }
                         }
@@ -64,9 +80,6 @@ require_once(__DIR__.'/includes/regularExpression.php');
                         echo '<br>';
                         echo '<input type="submit" value="Enviar">';     
                 echo '</form>';
-
-                
-            }
         
         ?>
     </div>
@@ -83,7 +96,6 @@ require_once(__DIR__.'/includes/regularExpression.php');
                 </a>
                 <h1>Revels</h1>
                 <?php
-                    $conection = bdconection($bd, $user, $pass, $options);
                     
                     $user_search = $conection->prepare('SELECT id from users where usuario=:usuar ;');
                     $user_search->bindParam(':usuar', $_POST['users']);
@@ -94,8 +106,6 @@ require_once(__DIR__.'/includes/regularExpression.php');
                         header('Location: /user/'.$userSearch['id'].'');
                     }
                     
-
-
                     echo '<form action="#" class="nav_form" method="post" class="coment_form" enctype="multipart/form-data">
                             <input class="input-nav" name="users" type="text" placeholder="Buscar...">
                             <button class="button-nav" type="submit" id="comment"><i class="fa-solid fa-magnifying-glass"></i></button>
@@ -103,32 +113,94 @@ require_once(__DIR__.'/includes/regularExpression.php');
                 ?>
             </nav>
             <aside class="sidebar">
-                
+                <h4 id="title_sidebarindex">Sugerencias para ti:</h4>
+                <?php
+                    $suggestions_info = $conection->prepare('SELECT usuario,id FROM users WHERE id NOT IN (SELECT userfollowed FROM follows WHERE userid = :id_user)and id != :id_user ORDER BY RAND() LIMIT 5;');
+                    $suggestions_info->bindParam(':id_user', $_SESSION['user']);
+                    $suggestions_info->execute();
+
+                    $suggestions = $suggestions_info->fetchAll();
+
+                    if(isset($_GET['follow'])){
+                        $add_follow = $conection->prepare('INSERT INTO follows (userid, userfollowed) VALUES (:iduser, :iduserfollowed);');
+                        $add_follow->bindParam(':iduserfollowed', $_GET['follow']);
+                        $add_follow->bindParam(':iduser', $_SESSION['user']);
+
+                        if (isset($_GET['follow'])) {
+                            $add_follow->execute();
+                            header('Location:/index');
+                            exit;
+                        }
+                    }
+
+                    foreach ($suggestions as $info) {
+                        echo '<div class="sidebar-suggestions">                  
+                                <a href="/user/'.$info['id'].'" id="enlace_userRevel">
+                                    <h4>'.$info['usuario'].'</h4>
+                                </a>
+                                <a href="/index/follow/'.$info['id'].'" id="seguir_user">Seguir</a>
+                            </div>';
+                    }
+                ?>
+            </aside>
+            <aside class="sidebar-accounts">      
+                <?php
+                    $user_account = $conection->prepare('SELECT usuario from users where id=:usuar;');
+                    $user_account->bindParam(':usuar', $_SESSION['user']);
+
+                    if(isset($_SESSION['user'])){
+                        $user_account->execute();
+                        $account_user = $user_account->fetch();
+                    }
+
+                    echo '<br><div class="account_div">
+                            <span id="user_account_text"><i class="fa-solid fa-user"></i>'.$account_user['usuario'].'</span>
+                                <div class="account-content">
+                                    <a href="/account"><i class="fa-solid fa-user"></i>  Cuenta</a>
+                                    <a href="/index"><i class="fa-solid fa-plus"></i>  Nuevo revel</a>
+                                    <a href="/account/cancel/1"><i class="fa-solid fa-right-from-bracket"></i>  Cerrar cuenta</a>
+                                </div>
+                        </div>';
+                ?>
             </aside>
             <article class="main">
                 <?php         
-                    $revels_info = $conection->prepare('SELECT r.texto, r.fecha, r.id,r.userid,(SELECT u.usuario from users u where u.id = r.userid) AS users, (SELECT count(*) from likes l where r.id = l.revelid) AS liked, (SELECT count(*) from dislikes d where r.id = d.revelid) AS disliked, (SELECT count(*) from comments c where r.id = c.revelid) AS comments FROM revels r WHERE r.userid=:id_user OR r.userid IN (SELECT userfollowed FROM follows WHERE userid = :id_user) ORDER BY r.fecha DESC;');
-                    $revels_info->bindParam(':id_user', $sesion);
+                    $revels_info = $conection->prepare('SELECT r.texto, r.fecha, r.id,r.userid,(SELECT u.usuario from users u where u.id = r.userid) AS users, (SELECT count(*) from likes l where r.id = l.revelid) AS liked, (SELECT count(*) from likes l where r.id = l.revelid and l.userid=:id_user) AS userlikes , (SELECT count(*) from dislikes d where r.id = d.revelid) AS disliked,(SELECT count(*) from dislikes d where r.id = d.revelid and d.userid=:id_user) AS userdislikes, (SELECT count(*) from comments c where r.id = c.revelid) AS comments FROM revels r WHERE r.userid = :id_user or r.userid IN (SELECT userfollowed FROM follows WHERE userid = :id_user) ORDER BY r.fecha DESC;');
+                    $revels_info->bindParam(':id_user', $_SESSION['user']);
                     $revels_info->execute();
-                    
+            
                     $revels = $revels_info->fetchAll();
+
+                    if(count($revels)===0){
+                        echo '<br>';
+                        echo '<br>';
+                        echo '<br>';
+                        echo '<br>';
+                        echo '<h2 class="text_nologin">Aún no tienes amigos en revels a que esperas,empieza a agregar a gente para poder ver sus revels</h2>';
+                    }else{
 
                     $select_like = $conection->prepare('SELECT userid FROM likes WHERE userid=:iduser and revelid=:idrevel;');
                     $select_like->bindParam(':idrevel', $_GET['like']);
-                    $select_like->bindParam(':iduser', $sesion);
+                    $select_like->bindParam(':iduser', $_SESSION['user']);
                     $select_like->execute();
 
                     $select_dislike = $conection->prepare('SELECT userid FROM dislikes WHERE userid=:iduser and revelid=:idrevel;');
                     $select_dislike->bindParam(':idrevel', $_GET['dislike']);
-                    $select_dislike->bindParam(':iduser', $sesion);
+                    $select_dislike->bindParam(':iduser', $_SESSION['user']);
                     $select_dislike->execute();
 
 
                     if(isset($_GET['like'])){
-                        if(count($select_like->fetchAll())===0 && count($select_dislike->fetchAll())===0){                        
+                        if(count($select_like->fetchAll())===0){  
+
+                            $deletedisLike = $conection->prepare('DELETE FROM dislikes where userid =:iduser and revelid=:idrevel ;');
+                            $deletedisLike->bindParam(':idrevel', $_GET['like']);
+                            $deletedisLike->bindParam(':iduser', $_SESSION['user']);
+                            $deletedisLike->execute();
+
                             $add_like = $conection->prepare('INSERT INTO likes (revelid, userid) VALUES (:idrevel,:iduser);');
                             $add_like->bindParam(':idrevel', $_GET['like']);
-                            $add_like->bindParam(':iduser', $sesion);
+                            $add_like->bindParam(':iduser', $_SESSION['user']);
 
                             if (isset($_GET['like'])) {
                                 $add_like->execute();
@@ -138,7 +210,7 @@ require_once(__DIR__.'/includes/regularExpression.php');
                         }else{
                             $deleteLike = $conection->prepare('DELETE FROM likes where userid =:iduser and revelid=:idrevel ;');
                             $deleteLike->bindParam(':idrevel', $_GET['like']);
-                            $deleteLike->bindParam(':iduser', $sesion);
+                            $deleteLike->bindParam(':iduser', $_SESSION['user']);
                             $deleteLike->execute();  
                             header('Location:/index');                         
                         }
@@ -146,10 +218,15 @@ require_once(__DIR__.'/includes/regularExpression.php');
 
 
                     if(isset($_GET['dislike'])){
-                        if(count($select_dislike->fetchAll())===0 && count($select_like->fetchAll())===0){                        
+                        if(count($select_dislike->fetchAll())===0){   
+                            $deleteLike = $conection->prepare('DELETE FROM likes where userid =:iduser and revelid=:idrevel ;');
+                            $deleteLike->bindParam(':idrevel', $_GET['dislike']);
+                            $deleteLike->bindParam(':iduser', $_SESSION['user']);
+                            $deleteLike->execute();
+
                             $add_dislike = $conection->prepare('INSERT INTO dislikes (revelid, userid) VALUES (:idrevel,:iduser);');
                             $add_dislike->bindParam(':idrevel', $_GET['dislike']);
-                            $add_dislike->bindParam(':iduser', $sesion);
+                            $add_dislike->bindParam(':iduser', $_SESSION['user']);
 
                             if (isset($_GET['dislike'])) {
                                 $add_dislike->execute();
@@ -159,34 +236,76 @@ require_once(__DIR__.'/includes/regularExpression.php');
                         }else{
                             $deletedisLike = $conection->prepare('DELETE FROM dislikes where userid =:iduser and revelid=:idrevel ;');
                             $deletedisLike->bindParam(':idrevel', $_GET['dislike']);
-                            $deletedisLike->bindParam(':iduser', $sesion);
+                            $deletedisLike->bindParam(':iduser', $_SESSION['user']);
                             $deletedisLike->execute();  
-                            header('Location:/index');                         
+                            header('Location:/index');                 
                         }
                     }
 
+                    if(isset($_POST['newrevel'])){
+                        $newrevels = $conection->prepare('INSERT INTO revels (userid,texto,fecha) VALUES (:userid,:texts,:dates);');
+                            $newrevels->bindParam(':userid',$_SESSION['user']);
+                            $newrevels->bindParam(':texts',$_POST['newrevel']);
+                            $newrevels->bindParam(':dates',$date);
+                    }
+
+                    if (isset($_POST['newrevel'])) {
+                        if (count($errors) < 1) {
+                            $newrevels->execute();
+                            header('Location: /index');
+                            exit;
+                        }
+                    }
+
+                    echo '<div class="newrevel-container">
+                                    <div class="title-main-user">
+                                        <h3>'.$account_user['usuario'].'</h3>
+                                    </div>
+                                    <div class="body-main-user">
+                                        <form action="#" method="post" class="revel_form" enctype="multipart/form-data">
+                                            <input type="text" name="newrevel" id="input-newrevel" placeholder="Añade un nuevo revel...">
+                                            <input type="submit" id="newrevels" value="Enviar">';
+                                            if (isset($errors['newrevel'])) {
+                                                echo '<p class="error_coment">'. $errors['newrevel'] . '</p><br>';
+                                            }
+                                        echo '</form>
+                                    </div>
+                            </div>
+                            
+                            <hr>';
 
                     foreach ($revels as $info) {
                         echo '<div class="container-main-user"> 
-                        <div class="title-main-user">
-                            <a href="/user/'.$info['userid'].'" id="enlace_userRevel">
-                                <h3>'.$info['users'].'</h3>
-                            </a>    
-                        </div>
-                        <div class="body-main-user">
-                            <a href="/revel/'.$info['id'].'" id="enlace_userRevel">
-                                 <p>'.$info['texto'].'</p>
-                            </a>
-                        </div>
-                        <div class="buttons-main-user">
-                            <a href="/index/like/'. $info['id'] . '"><i class="fa-regular fa-thumbs-up"></i></a><p>'.$info['liked'].'</p>
-                            <a href="/index/dislike/'. $info['id'] . '"><i class="fa-regular fa-thumbs-down"></i></a><p>'.$info['disliked'].'</p>
-                            <a href="/index/insert/' . $info['id'] . '"><i class="fa-regular fa-comment-dots"></i></a><p>'.$info['comments'].'</p>
-                        </div>
+                            <div class="title-main-user">
+                                <a href="/user/'.$info['userid'].'" id="enlace_userRevel">
+                                    <h3>'.$info['users'].'</h3>
+                                </a>    
+                            </div>
+                            <div class="body-main-user">
+                                <a href="/revel/'.$info['id'].'" id="enlace_userRevel">
+                                    <p>'.$info['texto'].'</p>
+                                </a>
+                            </div>
+                            <div class="buttons-main-user">';
+                                if($info['userlikes']==0){
+                                    $classLikes="fa-regular fa-thumbs-up";
+                                }else{
+                                    $classLikes="fa-solid fa-thumbs-up";
+                                }
+                                if($info['userdislikes']==0){
+                                    $classDislikes="fa-regular fa-thumbs-down";
+                                }else{
+                                    $classDislikes="fa-solid fa-thumbs-down";
+                                }
+                            echo '<a href="/index/like/'. $info['id'] . '"><i class="'.$classLikes.'"></i></a><p>'.$info['liked'].'</p>
+                                <a href="/index/dislike/'. $info['id'] . '"><i class="'.$classDislikes.'"></i></a><p>'.$info['disliked'].'</p>
+                                <a href="/index/insert/' . $info['id'] . '"><i class="fa-regular fa-comment-dots"></i></a><p>'.$info['comments'].'</p>
+                            </div>
                         </div>
                         <hr>';
-
                     }
+
+                }
                 
                 ?>
             </article>
