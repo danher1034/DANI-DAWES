@@ -10,7 +10,7 @@
         $user = 'revel';
         $pass = 'lever';
         $options = array(PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES utf8');
- 
+        $conection = bdconection($bd, $user, $pass, $options);
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -23,33 +23,13 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 <body class="body-account">
-    <nav class="navbar">
-            <a class="navbar-brand" href="/index.php">
-                <img src="/img/logo-revels.png" alt="Logo" width="55" height="50">
-            </a>
-            <h1>Revels</h1>
-            <?php
-                    $conection = bdconection($bd, $user, $pass, $options);
-
-                    if (isset($_GET['delete'])) {
-                        $deleted = $conection->exec('DELETE l ,d , c, r FROM revels r LEFT JOIN comments c ON r.id = c.revelid LEFT JOIN dislikes d ON r.id = d.revelid LEFT JOIN likes l ON r.id = l.revelid WHERE r.id =' . $_GET['delete']);
-                    }
-                    
-                    $user_search = $conection->prepare('SELECT id from users where usuario=:usuar ;');
-                    $user_search->bindParam(':usuar', $_POST['users']);
-
-                    if(isset($_POST['users'])){
-                        $user_search->execute();
-                        $userSearch = $user_search->fetch();
-                        header('Location: /user/'.$userSearch['id'].'');
-                    }
-
-                    echo '<form action="#" class="nav_form" method="post" class="coment_form" enctype="multipart/form-data">
-                            <input class="input-nav" name="users" type="text" placeholder="Buscar...">
-                            <button class="button-nav" type="submit" id="comment"><i class="fa-solid fa-magnifying-glass"></i></button>
-                        </form>';
-            ?>
-    </nav>
+        <?php
+            if (isset($_GET['delete'])) {
+                $deleted = $conection->exec('DELETE l ,d , c, r FROM revels r LEFT JOIN comments c ON r.id = c.revelid LEFT JOIN dislikes d ON r.id = d.revelid LEFT JOIN likes l ON r.id = l.revelid WHERE r.id =' . $_GET['delete']);
+            }
+            
+            require_once(__DIR__ .'/includes/header.inc.php');
+        ?>
     <aside class="sidebar-account">
         <?php
                   

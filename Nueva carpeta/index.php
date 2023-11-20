@@ -31,11 +31,11 @@ require_once(__DIR__.'/includes/regularExpression.php');
 
 <?php if (!isset($_SESSION['logged'])){ ?>
     <body class="body-index">
-    <div class="Sign-up" >
-        <div class="tittle">
+    <div class="tittle-login">
             <img src="img/logo-revels.png" alt="Logo" width="80" height="80">
             <h1>Revels</h1>
         </div>
+    <div class="Sign-up" >
         <br>
         <h4>Regístrate para ver revels de tus amigos</h4>
         <?php              
@@ -89,29 +89,10 @@ require_once(__DIR__.'/includes/regularExpression.php');
     <footer class="footer">FOOTER</footer>
     </body>
     <?php }else{ ?>
-        <body class="body-index2">
-            <nav class="navbar">
-                <a class="navbar-brand" href="/index.php">
-                    <img src="/img/logo-revels.png" alt="Logo" width="55" height="50">
-                </a>
-                <h1>Revels</h1>
-                <?php
-                    
-                    $user_search = $conection->prepare('SELECT id from users where usuario=:usuar ;');
-                    $user_search->bindParam(':usuar', $_POST['users']);
-
-                    if(isset($_POST['users'])){
-                        $user_search->execute();
-                        $userSearch = $user_search->fetch();
-                        header('Location: /user/'.$userSearch['id'].'');
-                    }
-                    
-                    echo '<form action="#" class="nav_form" method="post" class="coment_form" enctype="multipart/form-data">
-                            <input class="input-nav" name="users" type="text" placeholder="Buscar...">
-                            <button class="button-nav" type="submit" id="comment"><i class="fa-solid fa-magnifying-glass"></i></button>
-                        </form>';
-                ?>
-            </nav>
+        <body class="body-index2">  
+            
+            <?php require_once(__DIR__ .'/includes/header.inc.php') ?>
+            
             <aside class="sidebar">
                 <h4 id="title_sidebarindex">Sugerencias para ti:</h4>
                 <?php
@@ -141,26 +122,6 @@ require_once(__DIR__.'/includes/regularExpression.php');
                                 <a href="/index/follow/'.$info['id'].'" id="seguir_user">Seguir</a>
                             </div>';
                     }
-                ?>
-            </aside>
-            <aside class="sidebar-accounts">      
-                <?php
-                    $user_account = $conection->prepare('SELECT usuario from users where id=:usuar;');
-                    $user_account->bindParam(':usuar', $_SESSION['user']);
-
-                    if(isset($_SESSION['user'])){
-                        $user_account->execute();
-                        $account_user = $user_account->fetch();
-                    }
-
-                    echo '<br><div class="account_div">
-                            <span id="user_account_text"><i class="fa-solid fa-user"></i>'.$account_user['usuario'].'</span>
-                                <div class="account-content">
-                                    <a href="/account"><i class="fa-solid fa-user"></i>  Cuenta</a>
-                                    <a href="/index"><i class="fa-solid fa-plus"></i>  Nuevo revel</a>
-                                    <a href="/account/cancel/1"><i class="fa-solid fa-right-from-bracket"></i>  Cerrar cuenta</a>
-                                </div>
-                        </div>';
                 ?>
             </aside>
             <article class="main">
@@ -297,9 +258,9 @@ require_once(__DIR__.'/includes/regularExpression.php');
                                 }else{
                                     $classDislikes="fa-solid fa-thumbs-down";
                                 }
-                            echo '<a href="/index/like/'. $info['id'] . '"><i class="'.$classLikes.'"></i></a><p>'.$info['liked'].'</p>
-                                <a href="/index/dislike/'. $info['id'] . '"><i class="'.$classDislikes.'"></i></a><p>'.$info['disliked'].'</p>
-                                <a href="/index/insert/' . $info['id'] . '"><i class="fa-regular fa-comment-dots"></i></a><p>'.$info['comments'].'</p>
+                            echo '<a href="/index/like/'. $info['id'] . '"><i id="like-button" class="'.$classLikes.'"></i></a><p>'.$info['liked'].'</p>
+                                <a href="/index/dislike/'. $info['id'] . '"><i id="dislike-button" class="'.$classDislikes.'"></i></a><p>'.$info['disliked'].'</p>
+                                <a href="/index/insert/' . $info['id'] . '"><i id="comment-button" class="fa-regular fa-comment-dots"></i></a><p>'.$info['comments'].'</p>
                             </div>
                         </div>
                         <hr>';

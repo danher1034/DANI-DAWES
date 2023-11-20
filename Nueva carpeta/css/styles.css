@@ -33,6 +33,7 @@ img {
   gap: 10px;
   margin-top: 1%;
   grid-template:
+    "Tittle-login" 100px
     "Sign-up" auto
     "Sign-in" 100px
     "footer"  50px;
@@ -82,9 +83,9 @@ img {
   display: grid;
   gap: 10px;
   grid-template:
-      "navbar  navbar" 100px
-      "sidebar main"   70%
-      "sidebar-account main"   10%
+      "navbar2  navbar2" 100px
+      "sidebar main"   700px
+      "sidebar-account main"   100px
       "footer  footer" 50px /200px    auto;
       grid-template-columns: 25% 75%;
 }
@@ -113,15 +114,32 @@ img {
   display: grid;
   gap: 10px;
   grid-template:
-      "navbar  navbar" 100px
-      "sidebarAccount main"   20%
-      "sidebarAccount2 main"   60%
+      "navbar2  navbar2" 100px
+      "sidebarAccount main"   200px
+      "sidebarAccount2 main"   500px
       "footer  footer" 50px /200px    auto;
 
       grid-template-columns: 25% 75%;
 }
 
 .body-account > * {
+  box-shadow: -1px 1px 7px 0px rgba(0, 0, 0, 0.75);
+  padding: 10px;
+}
+
+.body-result {
+  display: grid;
+  gap: 10px;
+  grid-template:
+      "navbar  navbar" 100px
+      "sidebarResult main"   700px
+      "sidebar-account main"   100px
+      "footer  footer" 50px /200px    auto;
+
+      grid-template-columns: 25% 75%;
+}
+
+.body-result > * {
   box-shadow: -1px 1px 7px 0px rgba(0, 0, 0, 0.75);
   padding: 10px;
 }
@@ -270,6 +288,15 @@ img {
   align-items: center;
 }
 
+.navbar2 {
+  grid-area: navbar2;
+  background-color: #29b47d;
+  color:#e1dbdd;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
 .sidebar {
   grid-area: sidebar;
   background-color: #e1e0dd;
@@ -314,25 +341,26 @@ img {
 
 .sidebar-user {
   grid-area: sidebarUser;
-  background-color: #e1e0dd;
+  background-color: #bebfb4;
 }
 .sidebar-user2 {
   grid-area: sidebarUser2;
+  background-color: #e1e0dd;
+}
+
+.sidebar-account{
+  grid-area: sidebarAccount;
   background-color: #bebfb4;
 }
 
-.sidebar-user3 {
-  grid-area: sidebarUser3;
+.sidebar-result{
+  grid-area: sidebarResult;
   background-color: #e1e0dd;
 }
 
-.sidebar-account {
-  grid-area: sidebarAccount;
-  background-color: #e1e0dd;
-}
 .sidebar-account2 {
   grid-area: sidebarAccount2;
-  background-color: #bebfb4;
+  background-color: #e1e0dd;
 }
 
 .sidebar-suggestions{
@@ -351,9 +379,9 @@ img {
   gap: 10px;
   grid-template:
       "navbar  navbar" 100px
-      "sidebarUser main"   20%
-      "sidebarUser2 main"   50%
-      "sidebarUser3 main"   10%
+      "sidebarUser main"   200px
+      "sidebarUser2 main"   500px
+      "sidebar-account main"   100px
       "footer  footer" 50px /200px    auto;
 
       grid-template-columns: 25% 75%;
@@ -392,7 +420,6 @@ img {
   color: blue;
   margin-left: auto;
 }
-
 
 
 .revels {
@@ -449,8 +476,8 @@ img {
   gap: 10px;
   grid-template:
       "navbar  navbar" 100px
-      "sidebar main"   70%
-      "sidebar-account main" 10%
+      "sidebar main"   700px
+      "sidebar-account main"  100px
       "footer  footer" 50px /200px    auto;
       grid-template-columns: 25% 75%;
 }
@@ -504,22 +531,17 @@ img {
   font-size: 20px;
   margin-right: 10px;
 }
-  /* 
-  .color1 {color: #74808b;}
-  .color2 {color: #838d99;}
-  .color3 {color: #a1abaf;}
-  .color4 {color: #c4c8c8;}
-  .color5 {color: #e1dbdd;}
-  
-  .color1 {color: #000000;}
-  .color2 {color: #1b2634;}
-  .color3 {color: #435b76;}
-  .color4 {color: #7099c1;}
-  .color5 {color: #9fddff;}
-  */
 
+#like-button{
+  color: #41554d;
+}
 
+#dislike-button{
+  color: #41554d;
+}
 
-
+#comment-button{
+  color: #41554d;
+}
 
 

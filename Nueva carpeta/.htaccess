@@ -26,8 +26,18 @@ RewriteRule ^user/([0-9]+)/follow/([0-9]+)$ /user.php?id=$1&follow=$2 [L]
 
 RewriteRule ^user/([0-9]+)/dislike/([0-9]+)$ /user.php?id=$1&dislike=$2 [L]
 
-RewriteRule ^account$ /account.php? [L]
+RewriteRule ^account$ /account.php [L]
+
+RewriteRule ^account/header2/([0-9]+)$ /account.php?header2=$1 [L]
 
 RewriteRule ^account/cancel/([01])$ /account.php?cancel=$1 [L]
 
 RewriteRule ^account/delete/([0-9]+)$ /account.php?delete=$1 [L]
+
+RewriteRule ^results$ /results.php [L]
+
+RewriteRule ^results/search/([A-Za-z0-9]+)$ /results.php?search=$1 [L]
+
+RewriteRule ^results/search/([A-Za-z0-9]+)/unfollow/([0-9]+)$$ /results.php?search=$1&unfollow=$2 [L]
+
+RewriteRule ^results/search/([A-Za-z0-9]+)/follow/([0-9]+)$$ /results.php?search=$1&follow=$2 [L]

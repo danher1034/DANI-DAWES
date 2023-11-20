@@ -10,7 +10,7 @@
         $user = 'revel';
         $pass = 'lever';
         $options = array(PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES utf8');
-
+        $conection = bdconection($bd, $user, $pass, $options);
 ?> 
 <!DOCTYPE html>
 <html lang="es">
@@ -23,29 +23,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 <body class="body-user">
-    <nav class="navbar">
-            <a class="navbar-brand" href="/index.php">
-                <img src="/img/logo-revels.png" alt="Logo" width="55" height="50">
-            </a>
-            <h1>Revels</h1>
-            <?php
-                    $conection = bdconection($bd, $user, $pass, $options);
-                    
-                    $user_search = $conection->prepare('SELECT id from users where usuario=:usuar ;');
-                    $user_search->bindParam(':usuar', $_POST['users']);
-
-                    if(isset($_POST['users'])){
-                        $user_search->execute();
-                        $userSearch = $user_search->fetch();
-                        header('Location: /user/'.$userSearch['id'].'');
-                    }
-
-                    echo '<form action="#" class="nav_form" method="post" class="coment_form" enctype="multipart/form-data">
-                            <input class="input-nav" name="users" type="text" placeholder="Buscar...">
-                            <button class="button-nav" type="submit" id="comment"><i class="fa-solid fa-magnifying-glass"></i></button>
-                        </form>';
-            ?>
-    </nav>
+    <?php require_once(__DIR__ .'/includes/header.inc.php'); ?>
     <aside class="sidebar-user">
         <?php
                      
@@ -128,26 +106,6 @@
                         </a>
                      </div>';
             }
-        ?>
-    </aside>
-    <aside class="sidebar-user3">      
-        <?php
-            $user_account = $conection->prepare('SELECT usuario from users where id=:usuar;');
-            $user_account->bindParam(':usuar', $_SESSION['user']);
-
-            if(isset($_SESSION['user'])){
-                $user_account->execute();
-                $account_user = $user_account->fetch();
-            }
-
-            echo '<br><div class="account_div">
-                    <span id="user_account_text"><i class="fa-solid fa-user"></i>'.$account_user['usuario'].'</span>
-                        <div class="account-content">
-                            <a href="/account"><i class="fa-solid fa-user"></i>  Cuenta</a>
-                            <a href="/index"><i class="fa-solid fa-plus"></i>  Nuevo revel</a>
-                            <a href="/account/cancel/1"><i class="fa-solid fa-right-from-bracket"></i>  Cerrar cuenta</a>
-                        </div>
-                   </div>';
         ?>
     </aside>
     <article class="main">
@@ -236,9 +194,9 @@
                         }else{
                             $classDislikes="fa-solid fa-thumbs-down";
                         }
-                    echo '<a href="/user/' . $_GET['id'] . '/like/' . $info['id'] . '"><i class="'.$classLikes.'"></i></a><p>'.$info['liked'].'</p>
-                            <a href="/user/' . $_GET['id'] . '/dislike/' . $info['id'] . '"><i class="'.$classDislikes.'"></i></a><p>'.$info['disliked'].'</p>
-                            <a href="/user/' . $_GET['id'] . '/insert/' . $info['id'] . '"><i class="fa-regular fa-comment-dots"></i></a><p>'.$info['comments'].'</p>
+                    echo '<a href="/user/' . $_GET['id'] . '/like/' . $info['id'] . '"><i id="like-button" class="'.$classLikes.'"></i></a><p>'.$info['liked'].'</p>
+                            <a href="/user/' . $_GET['id'] . '/dislike/' . $info['id'] . '"><i id="dislike-button" class="'.$classDislikes.'"></i></a><p>'.$info['disliked'].'</p>
+                            <a href="/revel/'.$info['id'].'"><i id="comment-button" class="fa-regular fa-comment-dots"></i></a><p>'.$info['comments'].'</p>
                         </div>
                     </div>
                     <hr>';
