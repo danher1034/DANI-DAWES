@@ -4,9 +4,13 @@ if (isset($_GET['header2'])) {
     <a class="navbar-brand" href="/index.php">
         <img src="/img/logo-revels.png" alt="Logo" width="55" height="50">
     </a>
-
     <h1>Revels</h1>
-    </nav>';
+    <div class="bottons-navbar">
+        <a class="navbar-list" href="/list/header2/1">Lista</a>
+        <a class="navbar-sesion" href="/index.php">Cerrar sesión</a>
+    </div>
+    </nav>
+    <footer class="footer2">FOOTER</footer>';
 } else {
 
 ?>
@@ -47,6 +51,7 @@ if (isset($_GET['header2'])) {
                                 </div>
                         </div>
    
-    </aside>';
-    }
-        ?>
+    </aside>
+    <footer class="footer">FOOTER</footer>';
+}
+    ?>

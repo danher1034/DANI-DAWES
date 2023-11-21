@@ -183,7 +183,6 @@ $conection = bdconection($bd, $user, $pass, $options);
         echo '</div>';
         ?>
     </article>
-    <footer class="footer">FOOTER</footer>
 
 </body>
 

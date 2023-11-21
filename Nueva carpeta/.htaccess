@@ -32,7 +32,11 @@ RewriteRule ^account/header2/([0-9]+)$ /account.php?header2=$1 [L]
 
 RewriteRule ^account/cancel/([01])$ /account.php?cancel=$1 [L]
 
-RewriteRule ^account/delete/([0-9]+)$ /account.php?delete=$1 [L]
+RewriteRule ^list$ /list.php [L]
+
+RewriteRule ^list/header2/([0-9]+)$ /list.php?header2=$1 [L]
+
+RewriteRule ^list/header2/([0-9]+)/delete/([0-9]+)$ /list.php?header2=$1&delete=$2 [L]
 
 RewriteRule ^results$ /results.php [L]
 

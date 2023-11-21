@@ -69,7 +69,6 @@ require_once(__DIR__ . '/includes/bdconect.inc.php');
         <div class="Sign-up" >
             <p>¿No tienes cuenta en revels? <a href="index.php">Regístrate</a></p>
         </div>  
-        <footer class="footer">FOOTER</footer>
 
     </body>
 </html>

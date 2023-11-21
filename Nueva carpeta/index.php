@@ -270,7 +270,7 @@ require_once(__DIR__.'/includes/regularExpression.php');
                 
                 ?>
             </article>
-            <footer class="footer">FOOTER</footer>
+            
         </body>
     <?php } ?>
 </html>

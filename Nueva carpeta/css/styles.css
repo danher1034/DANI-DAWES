@@ -47,6 +47,14 @@ img {
   margin-right: 35%;
 }
 
+.navbar-list{
+  text-decoration: none;
+  margin-right: 20px;
+}
+
+.navbar-sesion{
+  text-decoration: none;
+}
 .Sign-in{
   grid-area: Sign-in;
   background-color: #f4f8fa;
@@ -117,12 +125,29 @@ img {
       "navbar2  navbar2" 100px
       "sidebarAccount main"   200px
       "sidebarAccount2 main"   500px
-      "footer  footer" 50px /200px    auto;
+      "footer2  footer2" 50px /200px    auto;
 
       grid-template-columns: 25% 75%;
 }
 
 .body-account > * {
+  box-shadow: -1px 1px 7px 0px rgba(0, 0, 0, 0.75);
+  padding: 10px;
+}
+
+.body-list {
+  display: grid;
+  gap: 10px;
+  grid-template:
+      "navbar2  navbar2" 100px
+      "sidebarlist main"   200px
+      "sidebarlist2 main"   500px
+      "footer2  footer2" 50px /200px    auto;
+
+      grid-template-columns: 25% 75%;
+}
+
+.body-list > * {
   box-shadow: -1px 1px 7px 0px rgba(0, 0, 0, 0.75);
   padding: 10px;
 }
@@ -319,6 +344,11 @@ img {
   background-color: #41554d;
 }
 
+.footer2 {
+  grid-area: footer2;
+  background-color: #33ac7c;
+}
+
 .error_login{
   color: red;
   font-size: 75%;
@@ -353,13 +383,18 @@ img {
   background-color: #bebfb4;
 }
 
+.sidebar-list{
+  grid-area: sidebarlist;
+  background-color: #bebfb4;
+}
+
 .sidebar-result{
   grid-area: sidebarResult;
   background-color: #e1e0dd;
 }
 
-.sidebar-account2 {
-  grid-area: sidebarAccount2;
+.sidebar-list2 {
+  grid-area: sidebarlist2;
   background-color: #e1e0dd;
 }
 
