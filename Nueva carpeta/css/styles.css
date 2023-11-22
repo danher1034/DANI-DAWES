@@ -18,6 +18,13 @@ body {
   border-radius: 5px;
 }
 
+.tittle-delete{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
 h1 {
   font-family: 'Healing Lighters', sans-serif;
   font-size: 50px;
@@ -97,8 +104,9 @@ img {
   gap: 10px;
   grid-template:
       "navbar2  navbar2" 100px
-      "sidebarAccount main"   200px
-      "sidebarAccount2 main"   600px
+      "sidebaruserfollow2 main"   200px
+      "sidebaruserfriend2 main"   500px
+      "sidebar-account2 main"   100px
       "footer2  footer2" 50px /200px    auto;
 
       grid-template-columns: 25% 75%;
@@ -109,13 +117,32 @@ img {
   padding: 10px;
 }
 
+.body-delete {
+  display: grid;
+  gap: 10px;
+  grid-template:
+      "navbar2  navbar2" 100px
+      "sidebaruserfollow2 main"   200px
+      "sidebaruserfriend2 main"   500px
+      "sidebar-account2 main"   100px
+      "footer2  footer2" 50px /200px    auto;
+
+      grid-template-columns: 25% 75%;
+}
+
+.body-delete > * {
+  box-shadow: -1px 1px 7px 0px rgba(0, 0, 0, 0.75);
+  padding: 10px;
+}
+
 .body-list {
   display: grid;
   gap: 10px;
   grid-template:
       "navbar2  navbar2" 100px
-      "sidebarlist main"   200px
-      "sidebarlist2 main"   600px
+      "sidebaruserfollow2 main"   200px
+      "sidebaruserfriend2 main"   500px
+      "sidebar-account2 main"   100px
       "footer2  footer2" 50px /200px    auto;
 
       grid-template-columns: 25% 75%;
@@ -289,7 +316,7 @@ img {
 
 .navbar2 {
   grid-area: navbar2;
-  background-color: #29b47d;
+  background-color: #b09ab1;
   color:#e1dbdd;
   display: flex;
   justify-content: space-between;
@@ -313,6 +340,17 @@ img {
   margin-right: 15%;
 }
 
+.main2 {
+  grid-area: main;
+  background-color: #e1e0d6;
+  max-height: 850px;
+  overflow: scroll;
+}
+
+.main2>*{
+  margin-left: 15%;
+  margin-right: 15%;
+}
 .footer {
   grid-area: footer;
   background-color: #41554d;
@@ -320,7 +358,7 @@ img {
 
 .footer2 {
   grid-area: footer2;
-  background-color: #33ac7c;
+  background-color: #b09ab1;
 }
 
 .error_login{
@@ -343,6 +381,11 @@ img {
   background-color: #bebfb4;
 }
 
+.sidebar-accounts2{
+  grid-area: sidebar-account2;
+  background-color: #8caab6;
+}
+
 .sidebar-user {
   grid-area: sidebarUser;
   background-color: #bebfb4;
@@ -352,14 +395,10 @@ img {
   background-color: #e1e0dd;
 }
 
-.sidebar-account{
-  grid-area: sidebarAccount;
-  background-color: #bebfb4;
-}
 
-.sidebar-list{
-  grid-area: sidebarlist;
-  background-color: #bebfb4;
+.sidebar-userfollow2{
+  grid-area: sidebaruserfollow2;
+  background-color: #8caab6;
 }
 
 .sidebar-result{
@@ -370,6 +409,11 @@ img {
 .sidebar-list2 {
   grid-area: sidebarlist2;
   background-color: #e1e0dd;
+}
+
+.sidebar-userfriend2{
+  grid-area: sidebaruserfriend2;
+  background-color: #b1c2ba;
 }
 
 .sidebar-suggestions{
@@ -603,6 +647,7 @@ img {
   display: flex;
   margin-bottom: 10px;
   flex-direction: column;
+  align-items: center;
 
 }
 .form-box form .input input{
@@ -633,6 +678,60 @@ img {
   opacity: 0.82;
 }
 
+.btn2{
+  height: 35px;
+  background: #5c5582;
+  border: 0;
+  border-radius: 5px;
+  color: #fff;
+  font-size: 15px;
+  cursor: pointer;
+  transition: all .3s;
+  margin-top: 10px;
+  padding: 0px 10px;
+  text-decoration: none;
+}
+
+.btn2:hover{
+  opacity: 0.82;
+}
+
+#btn2{
+  height: 55px;
+  background: #5c5582;
+  border: 0;
+  border-radius: 5px;
+  color: #fff;
+  font-size: 20px;
+  cursor: pointer;
+  transition: all .3s;
+  margin-top: 10px;
+  padding: 0px 10px;
+  text-decoration: none;
+}
+
+#btn2:hover{
+  opacity: 0.82;
+}
+
+#btn3{
+  height: 55px;
+  background: #b34e52;
+  border: 0;
+  border-radius: 5px;
+  color: #fff;
+  font-size: 20px;
+  cursor: pointer;
+  transition: all .3s;
+  margin-top: 10px;
+  padding: 0px 10px;
+  text-decoration: none;
+}
+
+#btn3:hover{
+  opacity: 0.82;
+}
+
 .btn-session{
   height: 25px;
   background: #41554d;
@@ -657,3 +756,42 @@ img {
   align-items: center;
 }
 
+#delete-button-yes:hover{
+  opacity: 0.82;
+}
+
+#delete-button-yes{
+  background-color: rgb(58, 143, 62);
+  color: #f4f8fa;
+  margin-left: 10%;
+  display: inline-block;
+  padding: 10px 20px;
+  text-decoration: none;
+  border-radius: 20px;
+  margin: 5px;
+  transition: background-color 0.3s;
+}
+
+#delete-button-no:hover{
+  opacity: 0.82;
+}
+
+#delete-button-no{
+  background-color: rgb(204, 77, 77);
+  color: #f4f8fa;
+  margin-left: 10%;
+  display: inline-block;
+  padding: 10px 20px;
+  text-decoration: none;
+  border-radius: 20px;
+  margin: 5px;
+  transition: background-color 0.3s;
+}
+
+.delete-buttons{
+  margin-left: 15%;
+}
+
+#delete-list{ 
+  color: #5c5582;
+}

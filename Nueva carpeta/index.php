@@ -6,7 +6,6 @@
  */
 
 require_once(__DIR__ . '/includes/bdconect.inc.php');
-require_once(__DIR__.'/includes/User.inc.php');
 require_once(__DIR__.'/includes/regularExpression.php');
         session_start();
         $bd = 'revels';
@@ -275,7 +274,7 @@ require_once(__DIR__.'/includes/regularExpression.php');
                                 }
                             echo '<a href="/index/like/'. $info['id'] . '"><i id="like-button" class="'.$classLikes.'"></i></a><p>'.$info['liked'].'</p>
                                 <a href="/index/dislike/'. $info['id'] . '"><i id="dislike-button" class="'.$classDislikes.'"></i></a><p>'.$info['disliked'].'</p>
-                                <a href="/index/insert/' . $info['id'] . '"><i id="comment-button" class="fa-regular fa-comment-dots"></i></a><p>'.$info['comments'].'</p>
+                                <a href="/revel/'.$info['id'].'"><i id="comment-button" class="fa-regular fa-comment-dots"></i></a><p>'.$info['comments'].'</p>
                             </div>
                         </div>
                         <hr>';

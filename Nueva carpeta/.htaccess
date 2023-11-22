@@ -26,17 +26,15 @@ RewriteRule ^user/([0-9]+)/follow/([0-9]+)$ /user.php?id=$1&follow=$2 [L]
 
 RewriteRule ^user/([0-9]+)/dislike/([0-9]+)$ /user.php?id=$1&dislike=$2 [L]
 
-RewriteRule ^account$ /account.php [L]
+RewriteRule ^account$ /backend/account.php [L]
 
-RewriteRule ^account/header2/([0-9]+)$ /account.php?header2=$1 [L]
+RewriteRule ^account/cancel/([01])$ /backend/account.php?cancel=$1 [L]
 
-RewriteRule ^account/cancel/([01])$ /account.php?cancel=$1 [L]
+RewriteRule ^list$ /backend/list.php [L]
 
-RewriteRule ^list$ /list.php [L]
+RewriteRule ^list/header2/([0-9]+)$ /backend/list.php?header2=$1 [L]
 
-RewriteRule ^list/header2/([0-9]+)$ /list.php?header2=$1 [L]
-
-RewriteRule ^list/header2/([0-9]+)/delete/([0-9]+)$ /list.php?header2=$1&delete=$2 [L]
+RewriteRule ^list/header2/([0-9]+)/delete/([0-9]+)$ /backend/list.php?header2=$1&delete=$2 [L]
 
 RewriteRule ^results$ /results.php [L]
 
@@ -45,3 +43,7 @@ RewriteRule ^results/search/([A-Za-z0-9]+)$ /results.php?search=$1 [L]
 RewriteRule ^results/search/([A-Za-z0-9]+)/unfollow/([0-9]+)$$ /results.php?search=$1&unfollow=$2 [L]
 
 RewriteRule ^results/search/([A-Za-z0-9]+)/follow/([0-9]+)$$ /results.php?search=$1&follow=$2 [L]
+
+RewriteRule ^close$ /close.php [L]
+
+RewriteRule ^delete$ /backend/delete.php [L]

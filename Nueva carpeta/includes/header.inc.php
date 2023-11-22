@@ -1,26 +1,9 @@
-<?php
-if (isset($_GET['header2'])) {
-    echo '<nav class="navbar2">
-    <a class="navbar-brand" href="/index.php">
-        <img src="/img/logo-revels.png" alt="Logo" width="55" height="50">
-    </a>
-    <h1>Revels</h1>
-    <div class="bottons-navbar">
-        <a class="navbar-list" href="/list/header2/1">Lista</a>
-        <a class="navbar-sesion" href="/index.php">Cerrar sesión</a>
-    </div>
-    </nav>
-    <footer class="footer2">FOOTER</footer>';
-} else {
-
-?>
-
-    <nav class="navbar">
-        <a class="navbar-brand" href="/index.php">
-            <img src="/img/logo-revels.png" alt="Logo" width="55" height="50">
-        </a>
-        <h1>Revels</h1>
-        <?php
+   <nav class="navbar">
+       <a class="navbar-brand" href="/index.php">
+           <img src="/img/logo-revels.png" alt="Logo" width="55" height="50">
+       </a>
+       <h1>Revels</h1>
+       <?php
         if (isset($_POST['users'])) {
             header('Location: /results/search/' . $_POST['users']);
             exit();
@@ -31,28 +14,27 @@ if (isset($_GET['header2'])) {
                             <button class="button-nav" type="submit" id="comment"><i class="fa-solid fa-magnifying-glass"></i></button>
                         </form>';
         ?>
-    </nav>
-    
-    <aside class="sidebar-accounts">
-    <?php
-    $user_account = $conection->prepare('SELECT usuario from users where id=:usuar;');
-    $user_account->bindParam(':usuar', $_SESSION['user']);
+   </nav>
 
-    if (isset($_SESSION['user'])) {
-        $user_account->execute();
-        $account_user = $user_account->fetch();
-    }
+   <aside class="sidebar-accounts">
+       <?php
+        $user_account = $conection->prepare('SELECT usuario from users where id=:usuar;');
+        $user_account->bindParam(':usuar', $_SESSION['user']);
 
-    echo '<br><div class="account_div">
-                            <span id="user_account_text"><i class="fa-solid fa-user"></i>' . $account_user['usuario'] . '</span>
-                                <div class="account-content">
-                                    <a href="/account/header2/1"><i class="fa-solid fa-user"></i>  Cuenta</a>
-                                    <a href="/index"><i class="fa-solid fa-plus"></i>  Nuevo revel</a>
-                                    <a href="/account/cancel/1"><i class="fa-solid fa-right-from-bracket"></i>  Cerrar sesión</a>
-                                </div>
-                        </div>
-   
-    </aside>
-    <footer class="footer">FOOTER</footer>';
-}
-    ?>
+        if (isset($_SESSION['user'])) {
+            $user_account->execute();
+            $account_user = $user_account->fetch();
+        }
+
+        echo '<br><div class="account_div">
+                                    <span id="user_account_text"><i class="fa-solid fa-user"></i>' . $account_user['usuario'] . '</span>
+                                        <div class="account-content">
+                                            <a href="/account"><i class="fa-solid fa-user"></i>  Cuenta</a>
+                                            <a href="/index"><i class="fa-solid fa-plus"></i>  Nuevo revel</a>
+                                            <a href="/close"><i class="fa-solid fa-right-from-bracket"></i>  Cerrar sesión</a>
+                                        </div>
+                                </div>';
+        ?>
+   </aside>
+
+   <footer class="footer">FOOTER</footer>

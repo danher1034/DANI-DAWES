@@ -4,7 +4,6 @@
  * @author Dani Agullo Heredia
  * @version 1.0
  */
-require_once(__DIR__ . '/includes/User.inc.php');
 require_once(__DIR__ . '/includes/regularExpression.php');
 require_once(__DIR__ . '/includes/bdconect.inc.php');
 session_start();
@@ -146,7 +145,7 @@ $conection = bdconection($bd, $user, $pass, $options);
         <div class="buttons-main-revel">
             <a href="/revel/' . $revels['id'] . '/like/' . $revels['id'] . '"><i id="like-button" class="' . $classLikes . '"></i></a><p>' . $revels['liked'] . '</p>
             <a href="/revel/' . $revels['id'] . '/dislike/' . $revels['id'] . '"><i id="dislike-button" class="' . $classDislikes . '"></i></a><p>' . $revels['disliked'] . '</p>
-            <a href="/index/insert/' . $revels['id'] . '"><i id="comment-button" class="fa-regular fa-comment-dots"></i></a><p>' . $revels['comments'] . '</p>
+            <a href="/revel/'.$revels['id'].'"><i id="comment-button" class="fa-regular fa-comment-dots"></i></a><p>' . $revels['comments'] . '</p>
         </div>
         <hr>    
         <div class="comment-container">
