@@ -21,54 +21,62 @@ require_once(__DIR__ . '/includes/bdconect.inc.php');
         <link href="https://fonts.cdnfonts.com/css/healing-lighters" rel="stylesheet">
         <title>Login</title>
     </head>
-    <body class="body-login">
-        <div class="tittle-login">
-            <img src="img/logo-revels.png" alt="Logo" width="80" height="80">
-            <h1>Revels</h1>
+    <body class='loginup'>
+    <div class="container">
+            <div class="box form-box">
+                <div class="tittle-login">
+                    <img src="img/logo-revels.png" alt="Logo" width="80" height="80">
+                    <h1>Revels</h1>
+                </div>
+                <div class="Sign-in" >
+                    <br>
+                    <h4>Inicia sesión para ver revels de tus amigos.</h4>         
+                        <?php
+                            
+                            $conection = bdconection($bd, $user, $pass, $options);
+
+                            $login_select = $conection->prepare('SELECT usuario, contrasenya, id from users where usuario=:usuar;');
+                            $login_select->bindParam(':usuar', $_POST['user']);              
+
+                            if(isset($_POST['user'])){
+                                $login_select->execute();
+                                $login_user = $login_select->fetch();
+                            }              
+                
+                            if(isset($_POST['user'])){
+                                if($login_user !== false && password_verify($_POST['password'], $login_user['contrasenya']) ){
+                                    $_SESSION['user']=$login_user['id'];
+                                    $_SESSION['logged'] = TRUE;  
+                                    header('Location:/index');
+                                }else{
+                                    $errors['user'] ='Usuario o contraseña incorrecta, intetanlo otra vez';
+                                }
+                            }             
+
+                            echo '<form action="#" method="post" enctype="multipart/form-data">';
+
+                                if (isset($errors['user'])) {
+                                    echo '<p class="error_login">'. $errors['user'] . '</p><br>';
+                                }
+                                echo '<br>';
+                                echo '<div class="field input">';
+                                echo '<br> Usuario: <input type="text" name="user" required" ><br>'; // Los siguiente if se encargan de crear los input para cada apartado                      
+                                echo '</div>';
+                                echo '<div class="field input">';
+                                echo '<br> Contraseña : <input type="password" name="password" required" ><br>';  
+                                echo '</div>';   
+                                echo '<div class="field">';                         
+                                echo '<input type="submit" class="btn" value="Iniciar sesión">';
+                                echo '</div>'; 
+
+                            echo '</form>';
+                        ?>     
+                </div>
+                <br>
+                <div class="sign-inup" >
+                    <p>¿No tienes cuenta en revels? </p> <a class="btn-session" href="index.php">Regístrate</a>
+                </div>  
         </div>
-        <div class="Sign-in" >
-            <br>
-            <h4>Inicia sesión para ver revels de tus amigos.</h4>         
-                <?php
-                    
-                    $conection = bdconection($bd, $user, $pass, $options);
-
-                    $login_select = $conection->prepare('SELECT usuario, contrasenya, id from users where usuario=:usuar;');
-                    $login_select->bindParam(':usuar', $_POST['user']);              
-
-                    if(isset($_POST['user'])){
-                        $login_select->execute();
-                        $login_user = $login_select->fetch();
-                    }              
-        
-                    if(isset($_POST['user'])){
-                        if(password_verify($_POST['password'], $login_user['contrasenya']) && $login_user['usuario']==$_POST['user']){
-                            $_SESSION['user']=$login_user['id'];
-                            $_SESSION['logged'] = TRUE;  
-                            header('Location:/index');
-                        }else{
-                            $errors['user'] ='Usuario o contraseña incorrecta, intetanlo otra vez';
-                        }
-                    }             
-
-                    echo '<form action="#" method="post" enctype="multipart/form-data">';
-
-                        if (isset($errors['user'])) {
-                            echo '<p class="error_login">'. $errors['user'] . '</p><br>';
-                        }
-                        echo '<br>';
-                        echo '<br> Usuario: <input type="text" name="user" required" ><br>'; // Los siguiente if se encargan de crear los input para cada apartado                      
-                        echo '<br> Contraseña : <input type="password" name="password" required" ><br>';                              
-                        echo '<br>';
-                        echo '<br>';
-                        echo '<input type="submit" value="Enviar">';
-
-                    echo '</form>';
-                ?>     
-        </div>
-        <div class="Sign-up" >
-            <p>¿No tienes cuenta en revels? <a href="index.php">Regístrate</a></p>
-        </div>  
-
+    </div>
     </body>
 </html>

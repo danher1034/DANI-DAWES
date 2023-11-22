@@ -15,6 +15,7 @@ body {
   align-items: center;
   justify-content: center;
   background-color: #41554d;
+  border-radius: 5px;
 }
 
 h1 {
@@ -28,24 +29,6 @@ img {
   vertical-align: middle;
 }
 
-.body-index {
-  display: grid;
-  gap: 10px;
-  margin-top: 1%;
-  grid-template:
-    "Tittle-login" 100px
-    "Sign-up" auto
-    "Sign-in" 100px
-    "footer"  50px;
-}
-
-.body-index > * {
-  box-shadow: -1px 1px 7px 0px rgba(0, 0, 0, 0.75);
-  padding: 10px;
-  text-align: center;
-  margin-left: 35%;
-  margin-right: 35%;
-}
 
 .navbar-list{
   text-decoration: none;
@@ -54,15 +37,6 @@ img {
 
 .navbar-sesion{
   text-decoration: none;
-}
-.Sign-in{
-  grid-area: Sign-in;
-  background-color: #f4f8fa;
-}
-
-.Sign-up{
-  grid-area: Sign-up;
-  background-color: #f4f8fa;
 }
 
 .body-login{ 
@@ -91,10 +65,10 @@ img {
   display: grid;
   gap: 10px;
   grid-template:
-      "navbar2  navbar2" 100px
-      "sidebar main"   700px
-      "sidebar-account main"   100px
-      "footer  footer" 50px /200px    auto;
+    "navbar  navbar" 100px
+    "sidebar-accounts main"   700px
+    "sidebar-account main"   100px
+    "footer  footer" 50px /200px    auto;
       grid-template-columns: 25% 75%;
 }
 
@@ -124,7 +98,7 @@ img {
   grid-template:
       "navbar2  navbar2" 100px
       "sidebarAccount main"   200px
-      "sidebarAccount2 main"   500px
+      "sidebarAccount2 main"   600px
       "footer2  footer2" 50px /200px    auto;
 
       grid-template-columns: 25% 75%;
@@ -141,7 +115,7 @@ img {
   grid-template:
       "navbar2  navbar2" 100px
       "sidebarlist main"   200px
-      "sidebarlist2 main"   500px
+      "sidebarlist2 main"   600px
       "footer2  footer2" 50px /200px    auto;
 
       grid-template-columns: 25% 75%;
@@ -330,7 +304,7 @@ img {
 .main {
   grid-area: main;
   background-color: #f4f8fa;
-  max-height: 800px;
+  max-height: 850px;
   overflow: scroll;
 }
 
@@ -578,5 +552,108 @@ img {
 #comment-button{
   color: #41554d;
 }
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap');
 
+*{
+  box-sizing: border-box;
+  font-family: 'Poppins',sans-serif;
+}
+
+.loginup{
+  background: #e1e0dd;
+  margin: 0;
+  padding: 0;
+}
+
+.container{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 90vh;
+}
+
+.container2{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 80vh;
+}
+
+.box{
+  background: #fdfdfd;
+  display: flex;
+  flex-direction: column;
+  padding: 25px 25px;
+  border-radius: 20px;
+  box-shadow: 0 0 150px 0 rgba(0,0,0,0.2),
+            0 40px 80px -50px rgba(0,0,0,0.7);         
+}
+.form-box{
+  width: 450px;
+  margin: 0px 10px;
+}
+.form-box header{
+  font-size: 25px;
+  font-weight: 600;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #e6e6e6;
+  margin-bottom: 10px;
+}
+.form-box form .field{
+  display: flex;
+  margin-bottom: 10px;
+  flex-direction: column;
+
+}
+.form-box form .input input{
+  height: 40px;
+  width: 100%;
+  font-size: 16px;
+  padding: 0 10px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  outline: none;
+}
+
+.btn{
+  height: 35px;
+  background: #41554d;
+  border: 0;
+  border-radius: 5px;
+  color: #fff;
+  font-size: 15px;
+  cursor: pointer;
+  transition: all .3s;
+  margin-top: 10px;
+  padding: 0px 10px;
+  text-decoration: none;
+}
+
+.btn:hover{
+  opacity: 0.82;
+}
+
+.btn-session{
+  height: 25px;
+  background: #41554d;
+  border: 0;
+  border-radius: 5px;
+  color: #fff;
+  font-size: 15px;
+  cursor: pointer;
+  transition: all .3s;
+  margin-top: 10px;
+  padding: 0px 10px;
+  text-decoration: none;
+}
+
+.btn-session:hover{
+  opacity: 0.82;
+}
+
+.sign-inup{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
 

@@ -32,6 +32,7 @@ if (isset($_GET['header2'])) {
                         </form>';
         ?>
     </nav>
+    
     <aside class="sidebar-accounts">
     <?php
     $user_account = $conection->prepare('SELECT usuario from users where id=:usuar;');

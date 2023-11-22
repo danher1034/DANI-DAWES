@@ -99,20 +99,33 @@ $conection = bdconection($bd, $user, $pass, $options);
                     $errors['password'] = 'Usuario o contraseña incorrecta, intetanlo otra vez';
                 }
             }
-
-            echo '<form action="#" method="post" enctype="multipart/form-data">';
-
-                echo '<br>';
-                echo '<br> Usuario: <input type="text" name="user" value="' . $user_name['usuario'] . '" " ><br>';
-                echo '<br> Mail: <input type="text" name="mail" value="' . $user_name['email'] . '" " ><br>'; // Los siguiente if se encargan de crear los input para cada apartado                    
-                echo '<br> Contraseña : <input type="password" name="password" required" ><br>';
-                if (isset($errors['password'])) {
-                    echo '<p class="error_login">' . $errors['password'] . '</p><br>';
-                }
-                echo '<br>';
-                echo '<input type="submit" value="Enviar">';
-
-            echo '</form>';
+            echo '<div class="container2">';
+                echo '<div class="box form-box">';
+                    echo '<form action="#" method="post" enctype="multipart/form-data">';
+                        echo '<br>';
+                        echo '<div class="field input">';
+                        echo '<br> Usuario: <input type="text" name="user" value="' . $user_name['usuario'] . '" " ><br>';
+                        echo '</div>';
+                        echo '<div class="field input">';
+                        echo '<br> Mail: <input type="text" name="mail" value="' . $user_name['email'] . '" " ><br>'; // Los siguiente if se encargan de crear los input para cada apartado                    
+                        echo '</div>';
+                        echo '<div class="field input">';
+                        echo '<br> Contraseña : <input type="password" name="password" required" ><br>';
+                        echo '</div>';
+                        if (isset($errors['password'])) {
+                            echo '<p class="error_login">' . $errors['password'] . '</p><br>';
+                        }
+                        echo '<br>';
+                        echo '<div class="field">';  
+                        echo '<input type="submit" class="btn" value="Enviar">';
+                        echo '</div>';
+                        echo '<br>';
+                        echo '<details>';
+                        echo '<summary>Cambiar Contraseña</summary>';
+                        echo '<br> Nueva Contraseña : <input type="password" name="newpassword" required" ><br>';
+                    echo '</form>';
+                echo '</div>';
+            echo '</div>';
         ?>
     </article>
 </body>

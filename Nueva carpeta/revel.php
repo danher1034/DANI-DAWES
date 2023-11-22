@@ -29,7 +29,9 @@ $conection = bdconection($bd, $user, $pass, $options);
 
 <body class="body-revels">
     <?php require_once(__DIR__ . '/includes/header.inc.php'); ?>
-    <aside class="sidebar">SIDEBAR</aside>
+
+    
+
     <article class="main">
         <?php
 

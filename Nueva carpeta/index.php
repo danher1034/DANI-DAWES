@@ -30,63 +30,78 @@ require_once(__DIR__.'/includes/regularExpression.php');
 </head>
 
 <?php if (!isset($_SESSION['logged'])){ ?>
-    <body class="body-index">
-    <div class="tittle-login">
-            <img src="img/logo-revels.png" alt="Logo" width="80" height="80">
-            <h1>Revels</h1>
-        </div>
-    <div class="Sign-up" >
-        <br>
-        <h4>Regístrate para ver revels de tus amigos</h4>
-        <?php              
+    <body class='loginup'>
+        <div class="container">
+            <div class="box form-box">
+                <div class="tittle-login">
+                        <img src="img/logo-revels.png" alt="Logo" width="80" height="80">
+                        <h1>Revels</h1>
+                    </div>
+                <div class="Sign-up" >
+                    <br>
+                    <h4>Regístrate para ver revels de tus amigos</h4>
+                    <?php              
 
-                if(isset($_POST['user'])){
+                            if(isset($_POST['user'])){
 
-                    $password=$_POST['password'];
-                    $encriptedPassword=password_hash($password,PASSWORD_DEFAULT);
+                                $password=$_POST['password'];
+                                $encriptedPassword=password_hash($password,PASSWORD_DEFAULT);
 
-                    $add_user = $conection->prepare('INSERT INTO users (usuario, contrasenya, email) VALUES (:user, :passwords, :email);');
-                    $add_user->bindParam(':user', $_POST['user']);
-                    $add_user->bindParam(':email', $_POST['mail']);
-                    $add_user->bindParam(':passwords', $encriptedPassword);
+                                $add_user = $conection->prepare('INSERT INTO users (usuario, contrasenya, email) VALUES (:user, :passwords, :email);');
+                                $add_user->bindParam(':user', $_POST['user']);
+                                $add_user->bindParam(':email', $_POST['mail']);
+                                $add_user->bindParam(':passwords', $encriptedPassword);
 
-                    if (isset($_POST['user'])) {
-                        $add_user->execute();
-                        header('Location:/login');
-                        exit;
-                    }
-                }
-
-                echo '<form action="#" method="post" enctype="multipart/form-data">';           
-                        if (isset($_POST['user'])) {
-                            if (count($errors) < 1) {
-                                header('Location:/index');
-                                exit;
+                                if (isset($_POST['user'])) {
+                                    $add_user->execute();
+                                    header('Location:/login');
+                                    exit;
+                                }
                             }
-                        }
-                        echo '<br> Mail: <input type="text" name="mail"><br>'; // Los siguiente if se encargan de crear los input para cada apartado
-                        if (isset($errors['mail'])) {
-                            echo '<p class="error_login">'. $errors['mail'] . '</p><br>';
-                        }
-                        echo '<br>Usuario: <input type="text" name="user"><br>';  
-                        if (isset($errors['user'])) {
-                            echo '<p class="error_login">'. $errors['user'] . '</p><br>';
-                        }
-                        echo '<br> Contraseña : <input type="text" name="password"><br>';
-                        if (isset($errors['password'])) {
-                            echo '<p class="error_login">'. $errors['password'] . '</p><br>';
-                        }
-                        echo '<br>';
-                        echo '<br>';
-                        echo '<input type="submit" value="Enviar">';     
-                echo '</form>';
-        
-        ?>
-    </div>
-    <div class="Sign-in" >
-         <p>¿Tienes cuenta en revels? <a href="login.php">Inicia sesión</a></p>
-    </div>
-    <footer class="footer">FOOTER</footer>
+
+                            echo '<form action="#" method="post" enctype="multipart/form-data">';           
+                                    if (isset($_POST['user'])) {
+                                        if (count($errors) < 1) {
+                                            header('Location:/index');
+                                            exit;
+                                        }
+                                    }
+
+                                    echo '<div class="field input">';
+                                    echo '<br> Mail: <input type="text" name="mail"><br>'; // Los siguiente if se encargan de crear los input para cada apartado
+                                    if (isset($errors['mail'])) {
+                                        echo '<p class="error_login">'. $errors['mail'] . '</p><br>';
+                                    }
+                                    echo '</div>';
+
+                                    echo '<div class="field input">';
+                                    echo '<br>Usuario: <input type="text" name="user"><br>';  
+                                    if (isset($errors['user'])) {
+                                        echo '<p class="error_login">'. $errors['user'] . '</p><br>';
+                                    }
+                                    echo '</div>';
+
+                                    echo '<div class="field input">';
+                                    echo '<br> Contraseña : <input type="text" name="password"><br>';
+                                    if (isset($errors['password'])) {
+                                        echo '<p class="error_login">'. $errors['password'] . '</p><br>';
+                                    }
+                                    echo '</div>';
+
+                                    echo '<div class="field">';
+                                    echo '<input type="submit" class="btn" value="Registrarse">';   
+                                    echo '</div>';  
+                            echo '</form>';
+                    
+                    ?>
+                </div>
+                <br>
+                <div class="sign-inup" >
+                    <p>¿Tienes cuenta en revels?</p>
+                    <a href="login.php" class="btn-session">Inicia sesión</a>
+                </div>
+            </div>
+        </div>
     </body>
     <?php }else{ ?>
         <body class="body-index2">  
