@@ -73,7 +73,7 @@ img {
   gap: 10px;
   grid-template:
     "navbar  navbar" 100px
-    "sidebar-accounts main"   700px
+    "sidebaruserfriend main" 700px
     "sidebar-account main"   100px
     "footer  footer" 50px /200px    auto;
       grid-template-columns: 25% 75%;
@@ -390,10 +390,6 @@ img {
   grid-area: sidebarUser;
   background-color: #bebfb4;
 }
-.sidebar-user2 {
-  grid-area: sidebarUser2;
-  background-color: #e1e0dd;
-}
 
 
 .sidebar-userfollow2{
@@ -416,6 +412,12 @@ img {
   background-color: #b1c2ba;
 }
 
+.sidebar-userfriend{
+  grid-area: sidebaruserfriend;
+  background-color: #e1e0dd;
+  overflow: scroll;
+}
+
 .sidebar-suggestions{
   display: flex;
   align-items: center;
@@ -433,7 +435,7 @@ img {
   grid-template:
       "navbar  navbar" 100px
       "sidebarUser main"   200px
-      "sidebarUser2 main"   500px
+      "sidebaruserfriend main" 500px
       "sidebar-account main"   100px
       "footer  footer" 50px /200px    auto;
 
@@ -529,7 +531,8 @@ img {
   gap: 10px;
   grid-template:
       "navbar  navbar" 100px
-      "sidebar main"   700px
+      "sidebar main"   450px
+      "sidebaruserfriend main" 250px
       "sidebar-account main"  100px
       "footer  footer" 50px /200px    auto;
       grid-template-columns: 25% 75%;

@@ -43,7 +43,6 @@
 
     <aside class="sidebar-userfriend2">
         <?php
-            echo '<h2>Seguidos</h2>';
             foreach ($amigos as $info) {
                 echo '<div class="sidebar-friend">                  
                         <a href="/user/'.$info['id'].'" id="enlace_userRevel">

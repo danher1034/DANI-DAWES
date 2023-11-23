@@ -1,5 +1,5 @@
    <nav class="navbar">
-       <a class="navbar-brand" href="/index.php">
+       <a class="navbar-brand" href="/index">
            <img src="/img/logo-revels.png" alt="Logo" width="55" height="50">
        </a>
        <h1>Revels</h1>
@@ -10,11 +10,30 @@
         }
 
         echo '<form action="#" class="nav_form" method="post" class="coment_form" enctype="multipart/form-data">
-                            <input class="input-nav" name="users" type="text" placeholder="Buscar...">
+                            <input class="input-nav" name="users" type="text" placeholder="Buscar..." required>
                             <button class="button-nav" type="submit" id="comment"><i class="fa-solid fa-magnifying-glass"></i></button>
                         </form>';
         ?>
    </nav>
+
+   
+   <aside class="sidebar-userfriend">
+        <?php
+        $amigos_info = $conection->prepare('SELECT usuario,id FROM users WHERE id IN (SELECT userfollowed FROM follows WHERE userid = :id_user)');
+        $amigos_info->bindParam(':id_user', $_SESSION['user']);
+        $amigos_info->execute();
+
+        $amigos = $amigos_info->fetchAll();
+            echo '<h2>Seguidos</h2>';
+            foreach ($amigos as $info) {
+                echo '<div class="sidebar-friend">                  
+                        <a href="/user/'.$info['id'].'" id="enlace_userRevel">
+                            <h4>'.$info['usuario'].'</h4>
+                        </a>
+                     </div>';
+            }
+        ?>
+    </aside>
 
    <aside class="sidebar-accounts">
        <?php

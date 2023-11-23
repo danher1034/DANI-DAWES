@@ -11,6 +11,7 @@
         $pass = 'lever';
         $options = array(PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES utf8');
         $conection = bdconection($bd, $user, $pass, $options);
+        require_once(__DIR__ . '/includes/likes_dislikes.inc.php');
 ?> 
 <!DOCTYPE html>
 <html lang="es">
@@ -31,10 +32,6 @@
             $user_info->bindParam(':id_user', $_GET['id']);
             $user_info->bindParam(':id_useraccount', $_SESSION['user']);
             $user_info->execute();
-
-            $amigos_info = $conection->prepare('SELECT usuario,id FROM users WHERE id IN (SELECT userfollowed FROM follows WHERE userid = :id_user)');
-            $amigos_info->bindParam(':id_user', $_GET['id']);
-            $amigos_info->execute();
 
             $revels_info = $conection->prepare('SELECT LEFT(r.texto, 50) AS texto, r.fecha, r.id, (SELECT count(*) from likes l where r.id = l.revelid) AS liked,(SELECT count(*) from likes l where r.id = l.revelid and l.userid=:id_useraccount) AS userlikes, (SELECT count(*) from dislikes d where r.id = d.revelid) AS disliked,(SELECT count(*) from dislikes d where r.id = d.revelid and d.userid=:id_useraccount) AS userdislikes, (SELECT count(*) from comments c where r.id = c.revelid) AS comments FROM revels r WHERE r.userid=:id_user ORDER BY r.fecha DESC;');
             $revels_info->bindParam(':id_user', $_GET['id']);
@@ -75,8 +72,6 @@
 
             $revels = $revels_info->fetchAll();
 
-            $amigos = $amigos_info->fetchAll();
-
             $revels_number = $revels_info->rowCount();
 
             echo '<div class="title_user_follow">
@@ -96,82 +91,10 @@
             echo '</div>';
         ?>
     </aside>
-    <aside class="sidebar-user2">
-        <?php
-            echo '<h2>Friends</h2>';
-            foreach ($amigos as $info) {
-                echo '<div class="sidebar-friend">                  
-                        <a href="/user/'.$info['id'].'" id="enlace_userRevel">
-                            <h4>'.$info['usuario'].'</h4>
-                        </a>
-                     </div>';
-            }
-        ?>
-    </aside>
+
     <article class="main">
-        <?php      
-        $select_like = $conection->prepare('SELECT userid FROM likes WHERE userid=:iduser and revelid=:idrevel;');
-        $select_like->bindParam(':idrevel', $_GET['like']);
-        $select_like->bindParam(':iduser', $_SESSION['user']);
-        $select_like->execute();
-
-        $select_dislike = $conection->prepare('SELECT userid FROM dislikes WHERE userid=:iduser and revelid=:idrevel;');
-        $select_dislike->bindParam(':idrevel', $_GET['dislike']);
-        $select_dislike->bindParam(':iduser', $_SESSION['user']);
-        $select_dislike->execute();
-
-
-        if(isset($_GET['like'])){
-            if(count($select_like->fetchAll())===0){  
-
-                $deletedisLike = $conection->prepare('DELETE FROM dislikes where userid =:iduser and revelid=:idrevel ;');
-                $deletedisLike->bindParam(':idrevel', $_GET['like']);
-                $deletedisLike->bindParam(':iduser', $_SESSION['user']);
-                $deletedisLike->execute();
-
-                $add_like = $conection->prepare('INSERT INTO likes (revelid, userid) VALUES (:idrevel,:iduser);');
-                $add_like->bindParam(':idrevel', $_GET['like']);
-                $add_like->bindParam(':iduser', $_SESSION['user']);
-
-                if (isset($_GET['like'])) {
-                    $add_like->execute();
-                    header('Location:/user/'.$_GET['id']);
-                    exit;
-                }                                           
-            }else{
-                $deleteLike = $conection->prepare('DELETE FROM likes where userid =:iduser and revelid=:idrevel ;');
-                $deleteLike->bindParam(':idrevel', $_GET['like']);
-                $deleteLike->bindParam(':iduser', $_SESSION['user']);
-                $deleteLike->execute();  
-                header('Location:/user/'.$_GET['id']);                         
-            }
-        }
-
-
-        if(isset($_GET['dislike'])){
-            if(count($select_dislike->fetchAll())===0){   
-                $deleteLike = $conection->prepare('DELETE FROM likes where userid =:iduser and revelid=:idrevel ;');
-                $deleteLike->bindParam(':idrevel', $_GET['dislike']);
-                $deleteLike->bindParam(':iduser', $_SESSION['user']);
-                $deleteLike->execute();
-
-                $add_dislike = $conection->prepare('INSERT INTO dislikes (revelid, userid) VALUES (:idrevel,:iduser);');
-                $add_dislike->bindParam(':idrevel', $_GET['dislike']);
-                $add_dislike->bindParam(':iduser', $_SESSION['user']);
-
-                if (isset($_GET['dislike'])) {
-                    $add_dislike->execute();
-                    header('Location:/user/'.$_GET['id']);
-                    exit;
-                }                                           
-            }else{
-                $deletedisLike = $conection->prepare('DELETE FROM dislikes where userid =:iduser and revelid=:idrevel ;');
-                $deletedisLike->bindParam(':idrevel', $_GET['dislike']);
-                $deletedisLike->bindParam(':iduser', $_SESSION['user']);
-                $deletedisLike->execute();  
-                header('Location:/user/'.$_GET['id']);                 
-            }
-        }
+        <?php  
+        if($user_name['userfollowed']==1){
 
             foreach ($revels as $info) {
                 echo '<div class="container-main-user"> 
@@ -201,6 +124,14 @@
                     </div>
                     <hr>';
             }
+        } else{
+            echo '<div class="text_nologin">
+                    <br>
+                    <i class="fa-solid fa-lock"></i>
+                    <br><h2>Esta cuenta es privada</h2> 
+                    <p>Sigue esta cuenta para ver sus revels</p>
+                </div>';
+        }
         ?>   
     </article>
 </body>

@@ -13,6 +13,7 @@ $pass = 'lever';
 $options = array(PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES utf8');
 $date = date("Y-m-d H:i:s");
 $conection = bdconection($bd, $user, $pass, $options);
+require_once(__DIR__ . '/includes/likes_dislikes.inc.php');
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -28,15 +29,20 @@ $conection = bdconection($bd, $user, $pass, $options);
 
 <body class="body-revels">
     <?php require_once(__DIR__ . '/includes/header.inc.php'); ?>
-
-    
+   
 
     <article class="main">
+        
         <?php
 
-        $user_info = $conection->prepare('SELECT usuario FROM users WHERE id=(SELECT userid from revels WHERE id=:id_revel);');
+        $user_info = $conection->prepare('SELECT u.usuario,(SELECT COUNT(*) FROM follows f WHERE f.userid = :id_useraccount AND f.userfollowed = u.id) AS userfollowed, (SELECT COUNT(*) FROM revels r WHERE r.id=:id_revel AND r.userid=:id_useraccount) AS userme FROM users u WHERE u.id=(SELECT userid from revels WHERE id=:id_revel);');
         $user_info->bindParam(':id_revel', $_GET['id']);
+        $user_info->bindParam(':id_useraccount', $_SESSION['user']);
         $user_info->execute();
+
+        $user_name = $user_info->fetch();
+
+        if($user_name['userfollowed']==1 || $user_name['userme']==1){
 
         $revels_info = $conection->prepare('SELECT r.texto, r.fecha, r.id, (SELECT count(*) from likes l where r.id = l.revelid) AS liked,(SELECT count(*) from likes l where r.id = l.revelid and l.userid=:id_user) AS userlikes, (SELECT count(*) from dislikes d where r.id = d.revelid) AS disliked,(SELECT count(*) from dislikes d where r.id = d.revelid and d.userid=:id_user) AS userdislikes, (SELECT count(*) from comments c where r.id = c.revelid) AS comments FROM revels r WHERE r.id=:id_revel ORDER BY r.fecha DESC;');
         $revels_info->bindParam(':id_user', $_SESSION['user']);
@@ -47,7 +53,6 @@ $conection = bdconection($bd, $user, $pass, $options);
         $comment_info->bindParam(':id_revel', $_GET['id']);
         $comment_info->execute();
 
-        $user_name = $user_info->fetch();
         $revels = $revels_info->fetch();
         $comments = $comment_info->fetchAll();
 
@@ -67,58 +72,6 @@ $conection = bdconection($bd, $user, $pass, $options);
         $select_dislike->bindParam(':iduser', $_SESSION['user']);
         $select_dislike->execute();
 
-
-        if (isset($_GET['like'])) {
-            if (count($select_like->fetchAll()) === 0) {
-
-                $deletedisLike = $conection->prepare('DELETE FROM dislikes where userid =:iduser and revelid=:idrevel ;');
-                $deletedisLike->bindParam(':idrevel', $_GET['like']);
-                $deletedisLike->bindParam(':iduser', $_SESSION['user']);
-                $deletedisLike->execute();
-
-                $add_like = $conection->prepare('INSERT INTO likes (revelid, userid) VALUES (:idrevel,:iduser);');
-                $add_like->bindParam(':idrevel', $_GET['like']);
-                $add_like->bindParam(':iduser', $_SESSION['user']);
-
-                if (isset($_GET['like'])) {
-                    $add_like->execute();
-                    header('Location:/revel/' . $_GET['id']);
-                    exit;
-                }
-            } else {
-                $deleteLike = $conection->prepare('DELETE FROM likes where userid =:iduser and revelid=:idrevel ;');
-                $deleteLike->bindParam(':idrevel', $_GET['like']);
-                $deleteLike->bindParam(':iduser', $_SESSION['user']);
-                $deleteLike->execute();
-                header('Location:/revel/' . $_GET['id']);
-            }
-        }
-
-
-        if (isset($_GET['dislike'])) {
-            if (count($select_dislike->fetchAll()) === 0) {
-                $deleteLike = $conection->prepare('DELETE FROM likes where userid =:iduser and revelid=:idrevel ;');
-                $deleteLike->bindParam(':idrevel', $_GET['dislike']);
-                $deleteLike->bindParam(':iduser', $_SESSION['user']);
-                $deleteLike->execute();
-
-                $add_dislike = $conection->prepare('INSERT INTO dislikes (revelid, userid) VALUES (:idrevel,:iduser);');
-                $add_dislike->bindParam(':idrevel', $_GET['dislike']);
-                $add_dislike->bindParam(':iduser', $_SESSION['user']);
-
-                if (isset($_GET['dislike'])) {
-                    $add_dislike->execute();
-                    header('Location:/revel/' . $_GET['id']);
-                    exit;
-                }
-            } else {
-                $deletedisLike = $conection->prepare('DELETE FROM dislikes where userid =:iduser and revelid=:idrevel ;');
-                $deletedisLike->bindParam(':idrevel', $_GET['dislike']);
-                $deletedisLike->bindParam(':iduser', $_SESSION['user']);
-                $deletedisLike->execute();
-                header('Location:/revel/' . $_GET['id']);
-            }
-        }
 
         echo '<div class="container-main-revel"> 
         <div class="title-main-user">
@@ -182,6 +135,10 @@ $conection = bdconection($bd, $user, $pass, $options);
             }
         }
         echo '</div>';
+
+    }else{
+        header('Location:/index');
+    }
         ?>
     </article>
 
