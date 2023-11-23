@@ -57,10 +57,19 @@ if (isset($_POST['user'])) { //comprueba si el campo existe
 if (isset($_POST['password'])) { //comprueba si el campo existe
     if (strlen($_POST['password'] > 0)) {
         if (!preg_match($passwordExpression, $_POST['password'])) { //comprueba que la fecha introducida sea valida
-            $errors['password'] = 'La contraseña debe contener al menos 1 letra mayuscula, un caracter especial ;:\.,!¡\?¿@#\$%\^&\-_+= y un digito';
+            $errors['password'] = 'La contraseña debe contener al menos 1 letra mayuscula y un caracter especial';
         }
     } else {
         $errors['password'] = 'No se ha introducido ninguna dato en la contraseña';
     }
 } 
  
+if (isset($_POST['password2'])) { //comprueba si el campo existe
+    if (strlen($_POST['password2'] > 0)) {
+        if (!preg_match($passwordExpression, $_POST['password2'])) { //comprueba que la fecha introducida sea valida
+            $errors['password2'] = 'La contraseña debe contener al menos 1 letra mayuscula y un caracter especial';
+        }
+    } else {
+        $errors['password2'] = 'No se ha introducido ninguna dato en la contraseña';
+    }
+} 

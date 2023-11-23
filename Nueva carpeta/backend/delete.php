@@ -33,37 +33,24 @@ require_once(__DIR__ . '/includes/header.inc.php');
         <div class="container">
             <div class="container">
                 <div class="box form-box">
-                    <div class="tittle-delete">
-                        <h2>¿ Seguro que quieres eliminar tu cuenta ?</h2>
-                    </div>
-                    <br>
                     <?php
-
                     $conection = bdconection($bd, $user, $pass, $options);
 
                     $login_select = $conection->prepare('SELECT usuario, contrasenya, id from users where usuario=:usuar;');
                     $login_select->bindParam(':usuar', $_POST['user']);
 
-                    if (isset($_POST['user'])) {
-                        $login_select->execute();
-                        $login_user = $login_select->fetch();
+                    if (isset($_GET['delet'])) {
+                        $deleted = $conection->exec('DELETE c, l ,d , r, u FROM users u LEFT JOIN revels r ON u.id = r.userid LEFT JOIN dislikes d ON u.id = d.userid LEFT JOIN likes l ON u.id = l.userid LEFT JOIN comments c ON u.id = c.userid WHERE u.id =' . $_SESSION['user']);
+                        session_destroy();
+                        header('Location:/index');
                     }
+                    
 
-                    if (isset($_POST['user'])) {
-                        if ($login_user !== false && password_verify($_POST['password'], $login_user['contrasenya'])) {
-                            $_SESSION['user'] = $login_user['id'];
-                            $_SESSION['logged'] = TRUE;
-                            header('Location:/index');
-                        } else {
-                            $errors['user'] = 'Usuario o contraseña incorrecta, intetanlo otra vez';
-                        }
-                    }
-
+                    echo '<h2 class="tittle-delete">¿ Seguro que quieres eliminar tu cuenta ?</h2>';
                     echo '<div class="delete-buttons">
-                                    <a href="/index/follow" id="delete-button-yes">Confirmar</a>
+                                    <a href="/delete/delet" id="delete-button-yes">Confirmar</a>
                                     <a href="/account" id="delete-button-no">Cancelar</a>
-                                  </div>';
-
+                            </div>';
                     ?>
                 </div>
             </div>
@@ -72,7 +59,3 @@ require_once(__DIR__ . '/includes/header.inc.php');
 </body>
 
 </html>
-
-<!-- if (isset($_GET['delete'])) {
-        $deleted = $conection->exec('DELETE l ,d , c, r FROM revels r LEFT JOIN comments c ON r.id = c.revelid LEFT JOIN dislikes d ON r.id = d.revelid LEFT JOIN likes l ON r.id = l.revelid WHERE r.id =' . $_GET['delete']);
-    } -->

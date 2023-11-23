@@ -37,44 +37,106 @@
             $login_user = $login_select->fetch();
 
             $login_user['contrasenya'];
-            
+
+            if(isset($_POST['user'])){
+                $_SESSION['user_edit'] = $_POST['user'];
+                $_SESSION['mail_edit'] = $_POST['mail'];
+            }
+
             if (isset($_POST['password'])) {
                 if (password_verify($_POST['password'], $login_user['contrasenya'])) {
                     $update_user = $conection->prepare('UPDATE users SET usuario = :usuario, email= :email WHERE id = :usuar;');
-                    $update_user->bindParam(':usuario', $_POST['user']);
-                    $update_user->bindParam(':email', $_POST['mail']);
+                    $update_user->bindParam(':usuario', $_SESSION['user_edit']);
+                    $update_user->bindParam(':email', $_SESSION['mail_edit']);
                     $update_user->bindParam(':usuar', $_SESSION['user']);
                     $update_user->execute();
-                    header('Location:/account/header2/1');  
+                    unset($_SESSION['mail_edit']);
+                    unset($_SESSION['user_edit']);
+                    header('Location:/account');   
                 } else {
-                    $errors['password'] = 'Usuario o contraseña incorrecta, intetanlo otra vez';
+                    $errors['password'] = 'Contraseña incorrecta, intetanlo otra vez';
                 }
             }
+
+            if (isset($_POST['password_confirm'])) {
+                if (password_verify($_POST['password_confirm'], $login_user['contrasenya'])) {
+                    if ($_POST['password2']==$_POST['password3']) {
+                        $password=$_POST['password2'];
+                        $encriptedPassword=password_hash($password,PASSWORD_DEFAULT);
+
+                        $update_user = $conection->prepare('UPDATE users SET contrasenya = :passwords WHERE id = :usuar;');
+                        $update_user->bindParam(':passwords', $encriptedPassword);
+                        $update_user->bindParam(':usuar', $_SESSION['user']);
+                        $update_user->execute();
+                        header('Location:/account');  
+                    }else{
+                        $errors['password2'] = 'Las nuevas contraseñas no coinciden';
+                    } 
+                } else {
+                    $errors['password2'] = 'Contraseña incorrecta, intetanlo otra vez';
+                }
+            }
+
             echo '<div class="container2">';
                 echo '<div class="box form-box">';
+                if(isset($_GET['newpassword'])){
+                    echo '<h2 id="tittle_edit">Cambiar contraseña</h2>';
                     echo '<form action="#" method="post" enctype="multipart/form-data">';
-                        echo '<br>';
-                        echo '<div class="field input">';
-                        echo '<br> Usuario: <input type="text" name="user" value="' . $user_name['usuario'] . '" " ><br>';
-                        echo '</div>';
-                        echo '<div class="field input">';
-                        echo '<br> Mail: <input type="text" name="mail" value="' . $user_name['email'] . '" " ><br>'; // Los siguiente if se encargan de crear los input para cada apartado                    
-                        echo '</div>';
-                        echo '<div class="field input">';
-                        echo '<br> Contraseña : <input type="password" name="password" required" ><br>';
-                        echo '</div>';
-                        if (isset($errors['password'])) {
-                            echo '<p class="error_login">' . $errors['password'] . '</p><br>';
-                        }
-                        echo '<br>';
-                        echo '<div class="field">';  
-                        echo '<input type="submit" class="btn2" value="Enviar">';
-                        echo '</div>';
-                        echo '<br>';
-                        echo '<details>';
-                        echo '<summary>Cambiar Contraseña</summary>';
-                        echo '<br> Nueva Contraseña : <input type="password" name="newpassword" required" ><br>';
+                            echo '<br>';
+                            echo '<div class="field input">';
+                            echo '<br> Nueva contraseña : <input type="password" name="password2" required" ><br>';
+                            echo '</div>';
+                            echo '<div class="field input">';
+                            echo '<br> Confirmar contraseña : <input type="password" name="password3" required" ><br>';
+                            echo '</div>';
+                            echo '<div class="field input">';
+                            echo '<br> Contraseña actual : <input type="password" name="password_confirm" required" ><br>';
+                            echo '</div>';
+                            if (isset($errors['password2'])) {
+                                echo '<p class="error_login">' . $errors['password2'] . '</p><br>';
+                            }
+                            echo '<br>';
+                            echo '<div class="field">';  
+                            echo '<input type="submit" class="btn2" value="Enviar">';
+                            echo '</div>';
                     echo '</form>';
+                }else{
+                if(isset($_POST['user'])){
+                    echo '<h2 id="tittle_edit">Escribe tu contraseña para completar al modificación</h2>';
+                    echo '<form action="#" method="post" enctype="multipart/form-data">';
+                            echo '<br>';
+                            echo '<div class="field input">';
+                            echo '<br> Contraseña : <input type="password" name="password" required" ><br>';
+                            echo '</div>';
+                            echo '<br>';
+                            echo '<div class="field">';  
+                            echo '<input type="submit" class="btn2" value="Enviar">';
+                            echo '</div>';
+                    echo '</form>';
+
+                }else{
+                    echo '<h2 id="tittle_edit">Editar usiario</h2>';
+                        echo '<form action="#" method="post" enctype="multipart/form-data">';
+                            echo '<br>';
+                            echo '<div class="field input">';
+                            if (isset($errors['password'])) {
+                                echo '<p class="error_login">' . $errors['password'] . '</p><br>';
+                            }
+                            echo '<br> Usuario: <input type="text" name="user" value="' . $user_name['usuario'] . '" " ><br>';
+                            echo '</div>';
+                            echo '<div class="field input">';
+                            echo '<br> Mail: <input type="text" name="mail" value="' . $user_name['email'] . '" " ><br>'; // Los siguiente if se encargan de crear los input para cada apartado                    
+                            echo '</div>';
+                            echo '<br>';
+                            echo '<div class="field">';  
+                            echo '<input type="submit" class="btn2" value="Enviar">';
+                            echo '</div>';
+                        echo '</form>';
+                        echo '<div class="field">';
+                            echo '<a id="btn-newpassword" href="/account/newpassword">Nueva Contraseña</a>';
+                        echo '</div>';
+                }
+            }
                 echo '</div>';
             echo '</div>';
         ?>

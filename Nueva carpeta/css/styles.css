@@ -795,3 +795,26 @@ img {
 #delete-list{ 
   color: #5c5582;
 }
+
+#tittle_edit{
+  text-align: center;
+}
+
+#btn-newpassword{
+  height: 35px;
+  background: #5c5582;
+  border: 0;
+  border-radius: 5px;
+  color: #fff;
+  font-size: 20px;
+  cursor: pointer;
+  transition: all .3s;
+  margin-top: 10px;
+  padding: 0px 10px;
+  text-decoration: none;
+  margin-left: 27%;
+}
+
+#btn-newpassword:hover{
+  opacity: 0.82;
+}

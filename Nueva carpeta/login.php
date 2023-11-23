@@ -3,7 +3,6 @@
  * @author Dani Agullo Heredia
  * @version 1.0
  */
-require_once(__DIR__.'/includes/User.inc.php');
 require_once(__DIR__ . '/includes/bdconect.inc.php');
         session_start();
         $bd = 'revels';

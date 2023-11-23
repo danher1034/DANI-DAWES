@@ -30,6 +30,8 @@ RewriteRule ^account$ /backend/account.php [L]
 
 RewriteRule ^account/cancel/([01])$ /backend/account.php?cancel=$1 [L]
 
+RewriteRule ^account/newpassword$ /backend/account.php?newpassword [L]
+
 RewriteRule ^list$ /backend/list.php [L]
 
 RewriteRule ^list/header2/([0-9]+)$ /backend/list.php?header2=$1 [L]
@@ -47,3 +49,5 @@ RewriteRule ^results/search/([A-Za-z0-9]+)/follow/([0-9]+)$$ /results.php?search
 RewriteRule ^close$ /close.php [L]
 
 RewriteRule ^delete$ /backend/delete.php [L]
+
+RewriteRule ^delete/delet$ /backend/delete.php?delet [L]
