@@ -244,6 +244,7 @@ img {
   border-radius: 20px;
   margin: 5px;
   transition: background-color 0.3s;
+  font-size: 15px;
 }
 
 .sidebar-suggestions>#seguir_user{
@@ -326,6 +327,7 @@ img {
 .sidebar {
   grid-area: sidebar;
   background-color: #e1e0dd;
+  overflow: hidden;
 }
 
 .main {

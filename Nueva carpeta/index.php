@@ -110,7 +110,7 @@ require_once(__DIR__.'/includes/regularExpression.php');
             <aside class="sidebar">
                 <h4 id="title_sidebarindex">Sugerencias para ti:</h4>
                 <?php
-                    $suggestions_info = $conection->prepare('SELECT usuario,id FROM users WHERE id NOT IN (SELECT userfollowed FROM follows WHERE userid = :id_user)and id != :id_user ORDER BY RAND() LIMIT 5;');
+                    $suggestions_info = $conection->prepare('SELECT usuario,id FROM users WHERE id NOT IN (SELECT userfollowed FROM follows WHERE userid = :id_user)and id != :id_user ORDER BY RAND() LIMIT 4;');
                     $suggestions_info->bindParam(':id_user', $_SESSION['user']);
                     $suggestions_info->execute();
 

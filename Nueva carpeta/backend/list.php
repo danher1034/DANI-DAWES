@@ -26,8 +26,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 <body class="body-list">
-        <?php
-            if (isset($_GET['delete'])) {$deleted = $conection->exec('DELETE l ,d , c, r FROM revels r LEFT JOIN comments c ON r.id = c.revelid LEFT JOIN dislikes d ON r.id = d.revelid LEFT JOIN likes l ON r.id = l.revelid WHERE r.id =' . $_GET['delete']);}?>
 
     <article class="main2">
         <?php           
@@ -35,7 +33,7 @@
                 echo '<div class="container-main-account"> 
                         <div class="title-main-account">
                             <h3>'.$user_name['usuario'].'</h3>
-                            <a href="/list/header2/1/delete/' . $info['id'] . '"><i class="fa-solid fa-trash" id="delete-list"></i></a>
+                            <a href="/delete/' . $info['id'] . '"><i class="fa-solid fa-trash" id="delete-list"></i></a>
                         </div>
                         <div class="body-main-user">
                             <a href="/revel/'.$info['id'].'" id="enlace_userRevel">

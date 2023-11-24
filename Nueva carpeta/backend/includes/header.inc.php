@@ -5,7 +5,7 @@
     <h1>Revels</h1>
     <div class="bottons-navbar">
         <a class="navbar-list" id="btn2" href="/list">Lista</a>
-        <a class="navbar-sesion" id="btn3" href="/delete">Cerrar sesión</a>
+        <a class="navbar-sesion" id="btn3" href="/cancel">Eliminar cuenta</a>
     </div>
 </nav>
 
@@ -43,7 +43,8 @@
 
     <aside class="sidebar-userfriend2">
         <?php
-            foreach ($amigos as $info) {
+            echo '<h2>Seguiendo</h2><br>';
+            foreach ($amigos as $info) {                
                 echo '<div class="sidebar-friend">                  
                         <a href="/user/'.$info['id'].'" id="enlace_userRevel">
                             <h4>'.$info['usuario'].'</h4>
@@ -69,7 +70,7 @@
         <div class="account-content">
             <a href="/account"><i class="fa-solid fa-user"></i> Cuenta</a>
             <a href="/index"><i class="fa-solid fa-plus"></i> Nuevo revel</a>
-            <a href="/account/cancel/1"><i class="fa-solid fa-right-from-bracket"></i> Cerrar sesión</a>
+            <a href="/close"><i class="fa-solid fa-right-from-bracket"></i> Cerrar sesión</a>
         </div>
     </div>';
     ?>

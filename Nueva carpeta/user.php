@@ -27,7 +27,9 @@
     <?php require_once(__DIR__ .'/includes/header.inc.php'); ?>
     <aside class="sidebar-user">
         <?php
-                     
+            if($_GET['id']==$_SESSION['user']){
+                header('Location:/account');
+            }     
             $user_info = $conection->prepare('SELECT u.usuario,(SELECT COUNT(*) FROM follows f WHERE f.userid = u.id) AS followed,(SELECT COUNT(*) FROM follows f WHERE f.userfollowed = u.id) AS followers,(SELECT COUNT(*) FROM follows f WHERE f.userid = :id_useraccount AND f.userfollowed = :id_user) AS userfollowed FROM users u WHERE u.id = :id_user;');
             $user_info->bindParam(':id_user', $_GET['id']);
             $user_info->bindParam(':id_useraccount', $_SESSION['user']);

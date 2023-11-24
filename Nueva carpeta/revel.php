@@ -30,7 +30,6 @@ require_once(__DIR__ . '/includes/likes_dislikes.inc.php');
 <body class="body-revels">
     <?php require_once(__DIR__ . '/includes/header.inc.php'); ?>
    
-
     <article class="main">
         
         <?php
@@ -44,12 +43,12 @@ require_once(__DIR__ . '/includes/likes_dislikes.inc.php');
 
         if($user_name['userfollowed']==1 || $user_name['userme']==1){
 
-        $revels_info = $conection->prepare('SELECT r.texto, r.fecha, r.id, (SELECT count(*) from likes l where r.id = l.revelid) AS liked,(SELECT count(*) from likes l where r.id = l.revelid and l.userid=:id_user) AS userlikes, (SELECT count(*) from dislikes d where r.id = d.revelid) AS disliked,(SELECT count(*) from dislikes d where r.id = d.revelid and d.userid=:id_user) AS userdislikes, (SELECT count(*) from comments c where r.id = c.revelid) AS comments FROM revels r WHERE r.id=:id_revel ORDER BY r.fecha DESC;');
+        $revels_info = $conection->prepare('SELECT r.texto, r.fecha, r.id,r.userid, (SELECT count(*) from likes l where r.id = l.revelid) AS liked,(SELECT count(*) from likes l where r.id = l.revelid and l.userid=:id_user) AS userlikes, (SELECT count(*) from dislikes d where r.id = d.revelid) AS disliked,(SELECT count(*) from dislikes d where r.id = d.revelid and d.userid=:id_user) AS userdislikes, (SELECT count(*) from comments c where r.id = c.revelid) AS comments FROM revels r WHERE r.id=:id_revel ORDER BY r.fecha DESC;');
         $revels_info->bindParam(':id_user', $_SESSION['user']);
         $revels_info->bindParam(':id_revel', $_GET['id']);
         $revels_info->execute();
 
-        $comment_info = $conection->prepare('SELECT c.texto,c.fecha, (SELECT usuario from users u where u.id=c.userid) AS usuario FROM comments c WHERE c.revelid=:id_revel;');
+        $comment_info = $conection->prepare('SELECT c.texto,c.fecha,c.userid, (SELECT usuario from users u where u.id=c.userid) AS usuario FROM comments c WHERE c.revelid=:id_revel;');
         $comment_info->bindParam(':id_revel', $_GET['id']);
         $comment_info->execute();
 
@@ -75,13 +74,15 @@ require_once(__DIR__ . '/includes/likes_dislikes.inc.php');
 
         echo '<div class="container-main-revel"> 
         <div class="title-main-user">
-            <h3>' . $user_name['usuario'] . '</h3>
+            <a href="/user/'.$revels['userid'].'" id="enlace_userRevel">
+                <h3>' . $user_name['usuario'] . '</h3>
+            </a>     
         </div>
         <div class="body-main-revel">
-                 <p>' . $revels['texto'] . '</p>
+            <p>' . $revels['texto'] . '</p>
         </div>
         <div class="hour-main-revel">      
-                 <p>' . $revels['fecha'] . '</p>
+            <p>' . $revels['fecha'] . '</p>
         </div>
         <hr>';
         if ($revels['userlikes'] == 0) {
@@ -115,7 +116,9 @@ require_once(__DIR__ . '/includes/likes_dislikes.inc.php');
         if (!empty($comments)) {
             foreach ($comments as $comment) {
                 echo '<div class="title-main-comment">
-                        <h3>' . $comment['usuario'] . '</h3>
+                        <a href="/user/'.$comment['userid'].'" id="enlace_userRevel">
+                            <h3>' . $comment['usuario'] . '</h3>
+                        </a>  
                     </div>
                     <div class="body-main-comment">
                         <p>' . $comment['texto'] . '</p>
