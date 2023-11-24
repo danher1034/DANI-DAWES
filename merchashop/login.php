@@ -3,12 +3,9 @@
  * @author Dani Agullo Heredia
  * @version 1.0
  */
-require_once(__DIR__ . '/includes/bdconect.inc.php');
+require_once(__DIR__ . '/includes/dbconnection.inc.php');
         session_start();
-        $bd = 'revels';
-        $user = 'revel';
-        $pass = 'lever';
-        $options = array(PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES utf8');
+        $connection = getDBConnection();
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -16,7 +13,7 @@ require_once(__DIR__ . '/includes/bdconect.inc.php');
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" href="css/styles.css">
+        <link rel="stylesheet" href="css/style.css">
         <link href="https://fonts.cdnfonts.com/css/healing-lighters" rel="stylesheet">
         <title>Login</title>
     </head>
@@ -24,18 +21,15 @@ require_once(__DIR__ . '/includes/bdconect.inc.php');
     <div class="container">
             <div class="box form-box">
                 <div class="tittle-login">
-                    <img src="img/logo-revels.png" alt="Logo" width="80" height="80">
-                    <h1>Revels</h1>
+                    <h1>Inicia sesion</h1>
                 </div>
                 <div class="Sign-in" >
-                    <br>
-                    <h4>Inicia sesión para ver revels de tus amigos.</h4>         
+                    <br>    
                         <?php
-                            
-                            $conection = bdconection($bd, $user, $pass, $options);
 
-                            $login_select = $conection->prepare('SELECT usuario, contrasenya, id from users where usuario=:usuar;');
+                            $login_select = $connection->prepare('SELECT user,rol, password from users where user=:usuar or email=:usuar;');
                             $login_select->bindParam(':usuar', $_POST['user']);              
+ 
 
                             if(isset($_POST['user'])){
                                 $login_select->execute();
@@ -43,9 +37,22 @@ require_once(__DIR__ . '/includes/bdconect.inc.php');
                             }              
                 
                             if(isset($_POST['user'])){
-                                if($login_user !== false && password_verify($_POST['password'], $login_user['contrasenya']) ){
-                                    $_SESSION['user']=$login_user['id'];
+                                if($login_user !== false && password_verify($_POST['password'], $login_user['password']) ){
+                                    if(isset($_POST['auto_login'])){
+                                        setcookie('accept', $_POST['auto_login'], httponly: true);
+                                        header('location:/index.php');
+                                        exit;
+                                    } 
+                                    $token=bin2hex(random_bytes(90));
+
+                                    $add_user = $connection->prepare('INSERT INTO users (user, password, email, rol) VALUES (:user, :passwords, :email, :rol );');
+                                    $add_user->bindParam(':user', $_POST['user']);
+                                    $add_user->bindParam(':email', $_POST['mail']);
+                                    $add_user->bindParam(':token', $token);
+                                    
+                                    $_SESSION['user']=$login_user['user'];
                                     $_SESSION['logged'] = TRUE;  
+                                    $_SESSION['rol'] = $login_user['rol'];
                                     header('Location:/index');
                                 }else{
                                     $errors['user'] ='Usuario o contraseña incorrecta, intetanlo otra vez';
@@ -59,11 +66,15 @@ require_once(__DIR__ . '/includes/bdconect.inc.php');
                                 }
                                 echo '<br>';
                                 echo '<div class="field input">';
-                                echo '<br> Usuario: <input type="text" name="user" required" ><br>'; // Los siguiente if se encargan de crear los input para cada apartado                      
+                                echo '<br><label for="user">Usuario:</label> <input type="text" name="user" required" ><br>'; // Los siguiente if se encargan de crear los input para cada apartado                      
                                 echo '</div>';
                                 echo '<div class="field input">';
-                                echo '<br> Contraseña : <input type="password" name="password" required" ><br>';  
+                                echo '<br> <label for="password">Contraseña :</label><input type="password" name="password" required" ><br>';  
                                 echo '</div>';   
+                                echo '<div class="field input">';
+                                    echo '<input type="checkbox" id="mantener" name="auto_login" value="auto_login">';
+                                    echo '<label for="mantener"> Quieres mantener sesión</label><br>';
+                                echo '</div>';
                                 echo '<div class="field">';                         
                                 echo '<input type="submit" class="btn" value="Iniciar sesión">';
                                 echo '</div>'; 

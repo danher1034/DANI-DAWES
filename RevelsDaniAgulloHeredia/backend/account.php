@@ -84,13 +84,13 @@
                     echo '<form action="#" method="post" enctype="multipart/form-data">';
                             echo '<br>';
                             echo '<div class="field input">';
-                            echo '<br> Nueva contraseña : <input type="password" name="password2" required" ><br>';
+                            echo '<br> <label for="password2">Nueva contraseña :</label> <input type="password" name="password2" id="password2" required" ><br>';
                             echo '</div>';
                             echo '<div class="field input">';
-                            echo '<br> Confirmar contraseña : <input type="password" name="password3" required" ><br>';
+                            echo '<br> <label for="password3">Confirmar contraseña :</label> <input type="password" name="password3" id="password3" required" ><br>';
                             echo '</div>';
                             echo '<div class="field input">';
-                            echo '<br> Contraseña actual : <input type="password" name="password_confirm" required" ><br>';
+                            echo '<br> <label for="password">Contraseña actual :</label> <input type="password" name="password_confirm" id="password" required" ><br>';
                             echo '</div>';
                             if (isset($errors['password2'])) {
                                 echo '<p class="error_login">' . $errors['password2'] . '</p><br>';
@@ -106,7 +106,7 @@
                     echo '<form action="#" method="post" enctype="multipart/form-data">';
                             echo '<br>';
                             echo '<div class="field input">';
-                            echo '<br> Contraseña : <input type="password" name="password" required" ><br>';
+                            echo '<br> <label for="password">Contraseña :</label> <input type="password" name="password" id="password" required" ><br>';
                             echo '</div>';
                             echo '<br>';
                             echo '<div class="field">';  
@@ -122,10 +122,10 @@
                             if (isset($errors['password'])) {
                                 echo '<p class="error_login">' . $errors['password'] . '</p><br>';
                             }
-                            echo '<br> Usuario: <input type="text" name="user" value="' . $user_name['usuario'] . '" " ><br>';
+                            echo '<br> <label for="user">Usuario: </label> <input type="text" name="user" id="user" value="' . $user_name['usuario'] . '" " ><br>';
                             echo '</div>';
                             echo '<div class="field input">';
-                            echo '<br> Mail: <input type="text" name="mail" value="' . $user_name['email'] . '" " ><br>'; // Los siguiente if se encargan de crear los input para cada apartado                    
+                            echo '<br> <label for="mail">Mail: </label> <input type="text" name="mail" id="mail" value="' . $user_name['email'] . '" " ><br>'; // Los siguiente if se encargan de crear los input para cada apartado                    
                             echo '</div>';
                             echo '<br>';
                             echo '<div class="field">';  

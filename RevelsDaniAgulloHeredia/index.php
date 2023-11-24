@@ -67,21 +67,21 @@ require_once(__DIR__.'/includes/regularExpression.php');
                                     }
 
                                     echo '<div class="field input">';
-                                    echo '<br> Mail: <input type="text" name="mail"><br>'; // Los siguiente if se encargan de crear los input para cada apartado
+                                    echo '<br><label for="mail">Mail:</label> <input type="text" name="mail" id="mail"><br>'; // Los siguiente if se encargan de crear los input para cada apartado
                                     if (isset($errors['mail'])) {
                                         echo '<p class="error_login">'. $errors['mail'] . '</p><br>';
                                     }
                                     echo '</div>';
 
                                     echo '<div class="field input">';
-                                    echo '<br>Usuario: <input type="text" name="user"><br>';  
+                                    echo '<br><label for="user">Nombre:</label> <input type="text" name="user" id="user"><br>';  
                                     if (isset($errors['user'])) {
                                         echo '<p class="error_login">'. $errors['user'] . '</p><br>';
                                     }
                                     echo '</div>';
 
                                     echo '<div class="field input">';
-                                    echo '<br> Contraseña : <input type="text" name="password"><br>';
+                                    echo '<br><label for="password">Contraseña:</label> <input type="text" name="password" id="password"><br>';
                                     if (isset($errors['password'])) {
                                         echo '<p class="error_login">'. $errors['password'] . '</p><br>';
                                     }
@@ -187,6 +187,7 @@ require_once(__DIR__.'/includes/regularExpression.php');
                                     </div>
                                     <div class="body-main-user">
                                         <form action="#" method="post" class="revel_form" enctype="multipart/form-data">
+                                            <label for="newrevel"></label> 
                                             <input type="text" name="newrevel" id="input-newrevel" placeholder="Añade un nuevo revel...">
                                             <input type="submit" id="newrevels" value="Enviar">';
                                             if (isset($errors['newrevel'])) {

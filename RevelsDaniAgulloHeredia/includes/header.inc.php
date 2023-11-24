@@ -10,7 +10,8 @@
         }
 
         echo '<form action="#" class="nav_form" method="post" class="coment_form" enctype="multipart/form-data">
-                            <input class="input-nav" name="users" type="text" placeholder="Buscar..." required>
+                            <label for="users"></label> 
+                            <input class="input-nav" name="users" name="users" type="text" placeholder="Buscar..." required>
                             <button class="button-nav" type="submit" id="comment"><i class="fa-solid fa-magnifying-glass"></i></button>
                         </form>';
         ?>
@@ -46,7 +47,7 @@
         }
 
         echo '<br><div class="account_div">
-                                    <span id="user_account_text"><i class="fa-solid fa-user"></i>' . $account_user['usuario'] . '</span>
+                                    <span id="user_account_text">' . $account_user['usuario'] . '</span>
                                         <div class="account-content">
                                             <a href="/account"><i class="fa-solid fa-user"></i>  Cuenta</a>
                                             <a href="/index"><i class="fa-solid fa-plus"></i>  Nuevo revel</a>
