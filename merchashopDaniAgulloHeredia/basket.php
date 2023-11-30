@@ -4,7 +4,7 @@
  * @author Dani Agullo Heredia
  * @version 1.0
  */
-
+require_once(__DIR__ . '/autologin.php');
 session_start();
 ?>
 <!doctype html>
@@ -18,21 +18,8 @@ session_start();
 
 	<body>	
 		<?php
-
-			if (isset($_SESSION['logged'])) {
-				echo '<aside class="sidebar-accounts">
-					<br><div class="account_div">
-						<span id="user_account_text"><i class="fa-solid fa-user"></i>' .  $_SESSION['user'] . '</span>
-							<div class="account-content">';
-				if ($_SESSION['rol'] == 'admin') {
-					echo '<a href="/user">Usuarios</a>';
-				}
-				echo ' <a href="/logout">Cerrar sesión</a>
-							</div>
-						</div>
-					</aside>';
-
-					require_once('includes/header.inc.php');
+			require_once('includes/header.inc.php');
+			if (isset($_SESSION['logged'])) {			
 		?>
 
 		<h2>Carrito</h2>
