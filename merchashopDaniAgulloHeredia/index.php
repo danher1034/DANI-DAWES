@@ -18,18 +18,21 @@ if(isset($_COOKIE['language'])){ // comprueba si existe la cookie de idioma
 }else{
 	require_once(__DIR__ . '/includes/lang/index/index.es.inc.php'); // se pondra el español por defecto en caso de no haber cookie creada
 }
-
+// Verifica si el usuario ha iniciado sesión
 if (isset($_SESSION['logged'])) { 
-
+	// Verifica si se ha solicitado alguna acción con la cesta de compras (añadir, restar, eliminar)
 	if (isset($_GET['add']) || isset($_GET['subtract']) || isset($_GET['remove'])) {
 		if (isset($_GET['add']) && $_GET['add'] != '') {
+			// Verifica si el artículo aún no está en la cesta, luego lo añade; de lo contrario, aumenta la cantidad
 			if (!isset($_SESSION['basket'][$_GET['add']]))
 				$_SESSION['basket'][$_GET['add']] = 1;
 			else
 				$_SESSION['basket'][$_GET['add']] += 1;
 		}
+		// Si se solicita la acción 'subtract'
 		if (isset($_GET['subtract']) && $_GET['subtract'] != '' && isset($_SESSION['basket'][$_GET['subtract']])) {
 			$_SESSION['basket'][$_GET['subtract']] -= 1;
+			// Disminuye la cantidad y elimina si se vuelve cero o menos
 			if ($_SESSION['basket'][$_GET['subtract']] <= 0)
 				unset($_SESSION['basket'][$_GET['subtract']]);
 		}
@@ -54,41 +57,30 @@ if (isset($_SESSION['logged'])) {
 
 <body>
 	<?php
+	// Incluye el archivo de encabezado
 	require_once('includes/header.inc.php');
+	// Verifica si el usuario no ha iniciado sesión
 	if (!isset($_SESSION['logged'])) {
+		// Muestra el formulario de registro
 		echo '<div class="container">
 		<div class="box form-box">';
 		echo '<div class="tittle-login">
 				<h1>'.$index_merchashop['singup'].'</h1>
 			</div>';
 		echo '<form action="/signup.php" method="post" enctype="multipart/form-data">';
-		if (isset($_POST['user'])) {
-			if (count($errors) < 1) {
-				header('Location:/index');
-				exit;
-			}
-		}
+		// Campo de entrada para el correo electrónico
 			echo '<div class="field input">';
 			echo '<br><label for="mail">Mail:</label> <input type="text" name="mail"><br>'; // Los siguiente if se encargan de crear los input para cada apartado
-			if (isset($errors['mail'])) {
-				echo '<p class="error_login">' . $errors['mail'] . '</p><br>';
-			}
 			echo '</div>';
-	
+	// Campo de entrada para el nombre de usuario
 			echo '<div class="field input">';
 			echo '<br><label for="user">'.$index_merchashop['name'].'</label> <input type="text" name="user"><br>';
-			if (isset($errors['user'])) {
-				echo '<p class="error_login">' . $errors['user'] . '</p><br>';
-			}
 			echo '</div>';
-	
+	// Campo de entrada para la contraseña
 			echo '<div class="field input">';
 			echo '<br><label for="password">'.$index_merchashop['password'].'</label> <input type="text" name="password"><br>';
-			if (isset($errors['password'])) {
-				echo '<p class="error_login">' . $errors['password'] . '</p><br>';
-			}
 			echo '</div>';
-	
+	// Botón de envío del formulario de registro
 			echo '<div class="field">';
 			echo '<input type="submit" class="btn" value="'.$index_merchashop['sigup_submit'].'">';
 			echo '</div>';
@@ -109,6 +101,7 @@ if (isset($_SESSION['logged'])) {
 			$products = 0;
 		else
 			$products = count($_SESSION['basket']);
+		// Muestra la cantidad de productos en el carrito
 		echo $products;
 		echo ' ';
 		echo $index_merchashop['product'];
@@ -117,7 +110,7 @@ if (isset($_SESSION['logged'])) {
 
 		$index_merchashop['in_basket'];
 		?>
-		
+		<!-- Enlace para ver el contenido del carrito -->
 		<a href="/basket" class="boton"><?=$index_merchashop['see_basket']?></a>
 	</div>
 
@@ -128,6 +121,7 @@ if (isset($_SESSION['logged'])) {
 		$products = $connection->query('SELECT * FROM products;', PDO::FETCH_OBJ);
 
 		foreach ($products as $product) {
+			// Muestra información de cada producto en la base de datos
 			echo '<article class="producto">';
 			echo '<h2>' . $product->name . '</h2>';
 			echo '<span>(' . $product->category . ')</span>';

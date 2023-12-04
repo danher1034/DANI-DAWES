@@ -12,5 +12,6 @@ $login_merchashop = [
     'keep' => 'Keep in session', 
     'botton_login' => 'Login', 
     'sigup' => 'Don\'t have an account?', 
-    'botton_singup' => 'Sing up'
+    'botton_singup' => 'Sing up',
+    'error' => 'Incorrect username or password, please try again'
 ];

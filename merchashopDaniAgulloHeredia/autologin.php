@@ -3,7 +3,6 @@
  * @author Dani Agullo Heredia
  * @version 1.0
  */
-
 if (!isset($_SESSION['user']) && isset($_COOKIE['token'])) {
     $connection = getDBConnection();
     $autoLogin = $connection->prepare('select user, rol from users where token=:token;"');

@@ -1,13 +1,33 @@
 <?php
-
 /**
  * @author Dani Agullo Heredia
  * @version 1.0
  */
-
+session_start();
 require_once(__DIR__ . '/includes/dbconnection.inc.php');
-        session_start();
-        $connection = getDBConnection();
+$connection = getDBConnection();
+
+if (isset($_POST['user'])) {
+        // Validar expresiones regulares
+        if (!preg_match('/^([a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$)/', $_POST['mail'])) {
+            $errors['mail'] = 'Formato de correo electrónico inválido';
+        }
+        if (!preg_match('/[A-z0-9 ]{3,20}/', $_POST['user'])) {
+            $errors['user'] = 'Formato de nombre de usuario inválido';
+        }
+        if (!preg_match('/^((?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=\S+$)(?=.*[;:\.,!¡\?¿@#\$%\^&\-_+=\(\)\[\]\{\}])).{8,20}$/', $_POST['password'])) {
+            $errors['password'] = 'Formato de contraseña inválido';
+        }
+    if (isset($errors)) {   
+        if (count($errors) < 1) {
+            header('Location: /index');
+            exit;
+        } else {
+            // Almacena los errores en variables de sesión
+            $_SESSION['signup_errors'] = $errors;
+        }
+    }
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -22,7 +42,7 @@ require_once(__DIR__ . '/includes/dbconnection.inc.php');
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 
-<?php if (!isset($_SESSION['logged'])){ ?>
+<?php if (!isset($_SESSION['logged'])&&!isset($_SESSION['signup_errors'])){ ?>
     <body class='loginup'>
         <div class="container">
             <div class="box form-box">
@@ -32,7 +52,7 @@ require_once(__DIR__ . '/includes/dbconnection.inc.php');
                 <div class="Sign-up" >
                     <br>
                     <?php              
-
+                            unset($_SESSION['signup_errors']);
                             if(isset($_POST['user'])){
 
                                 $password=$_POST['password'];
@@ -58,4 +78,25 @@ require_once(__DIR__ . '/includes/dbconnection.inc.php');
             </div>
         </div>
     </body>
-    <?php }else{ }?>
+    <?php }else{ ?>
+        <body class='loginup'>
+        <div class="container">
+            <div class="box form-box">
+                <div class="tittle-login">
+                        <h1>Regístrate en Merchshopa</h1>
+                    </div>
+                <div class="Sign-up" >
+                    <br>
+                    <?php              
+                        foreach($_SESSION['signup_errors'] as $error){
+                            echo $error;
+                            echo '<br>';
+                            echo '<br>';
+                        }   
+                        unset($_SESSION['signup_errors']);              
+                    ?>    
+                </div>
+            </div>
+        </div>
+    </body>
+    <?php }?>

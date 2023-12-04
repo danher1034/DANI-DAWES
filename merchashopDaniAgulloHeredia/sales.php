@@ -1,5 +1,4 @@
 <?php
-
 /**
  *	Script que implementa un carrito de la compra con variables de sesión
  * @author Dani Agullo Heredia

@@ -12,6 +12,7 @@ $login_merchashop = [
     'keep' => 'Quieres mantener sesión', 
     'botton_login' => 'Iniciar sesión', 
     'sigup' => '¿No tienes cuenta?', 
-    'botton_singup' => 'Registraté'
+    'botton_singup' => 'Registraté',
+    'error' => 'Usuario o contraseña incorrecta, inténtalo otra vez'
 ];
 
