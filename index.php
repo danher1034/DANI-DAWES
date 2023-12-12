@@ -35,12 +35,12 @@
                     $characters[] = array( // Agregar el nombre y la imagen al array 'characters'
                         'name' => $character->name,
                         'image' => $character->image,
+                        'id' =>$character->id
                     );
                 }
             }
         }
 
-        
         while (isset($data->info->next) && $data->info->next !== null) { // Iniciar un bucle que se repetirá mientras exista una próxima página
             // Obtener la siguiente página
             $endpoint = $data->info->next;
@@ -53,20 +53,59 @@
                     $characters[] = array(
                         'name' => $character->name,
                         'image' => $character->image,
+                        'id' =>$character->id
                     );
                 }
             }
         }
 
-        echo '<div class="characters">';
-            foreach ($characters as $character) {
-                echo '<div class="characters">
-                <div class="character">
-                    <h3>'.$character['name'].'</h3>
-                    <img src="'.$character['image'].'" alt="'.$character['name'].'">
-                </div>';
+        if (isset($_POST['search'])&&strlen($_POST['search'])>=1) {// Recorrer $data todos los resultados
+            $result=urlencode(trim($_POST['search']));
+            $endpoint='https://rickandmortyapi.com/api/character/?name='.$result; //creo Endpoint con la consulta a la api y sus resultados
+            $data=file_get_contents($endpoint); //guardamos en data los resultados de la api
+            $data=json_decode($data); //decodificamos el json
+            foreach ($data->results as $character) {
+                if (isset($character->name, $character->image)) { // Verificar si las claves 'name' e 'image' existen en el objeto actual                   
+                    $characters[] = array( // Agregar el nombre y la imagen al array 'characters'
+                        'name' => $character->name,
+                        'image' => $character->image,
+                        'id' =>$character->id
+                    );
+                }
             }
-        echo ' </div>';
+
+            while (isset($data->info->next) && $data->info->next !== null) { // Iniciar un bucle que se repetirá mientras exista una próxima página
+                // Obtener la siguiente página
+                $endpoint = $data->info->next;
+                $data = file_get_contents($endpoint);
+                $data = json_decode($data);
+                // Recorrer los resultados de la página actual y agregar al array 'characters'
+                foreach ($data->results as $character) {
+                    if (isset($character->name, $character->image)) {
+                        $characters[] = array(
+                            'name' => $character->name,
+                            'image' => $character->image,
+                            'id' =>$character->id
+                        );
+                    }
+                }
+            }
+        }
+
+        if(isset($characters)){
+            echo '<div class="characters">';
+                foreach ($characters as $character) {
+                    echo '<div class="characters">
+                    <div class="character">
+                        <a href="/character.php?id='.$character['id'].'">
+                            <h3>'.$character['name'].'</h3>
+                            <img src="'.$character['image'].'" alt="'.$character['name'].'">
+                        </a>
+                    </div>
+                    </div>';
+                }
+            echo ' </div>';
+        }
     ?>
     
 </body>
